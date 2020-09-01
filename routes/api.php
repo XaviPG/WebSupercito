@@ -162,3 +162,5 @@ Route::get('/v0/consultar_ubicacion_courier/{data?}','UserController@consultar_u
 //////////orden/////////////////////////
 Route::get('/v0/ordenes_show/{data?}','OrdenController@show');
 Route::post('/v0/ordenes_finalizar/{data?}','OrdenController@finalizarOrden');
+
+Route::get('/v0/contar_registros','RegistroPromocionesController@contarRegistros');

@@ -282,6 +282,24 @@ class RegistroPromocionesController extends Controller
         return response()->json($result);
     }
     
+    public function contarRegistros()
+    {
+        $code='';
+        $message ='';
+        $items ='';
+
+        $code = '200';
+        $items =RegistroPromociones::where("estado_del",'1')->count();
+        $message = 'OK';
+
+        $result =   array(
+            'items'     => $items,
+            'code'      => $code,    
+            'message'   => $message
+        );
+return response()->json($result);
+
+    }
     
     
 }

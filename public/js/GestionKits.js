@@ -377,14 +377,14 @@ function limpiar() {
  
 
       $.ajax({
-        url:servidor+ '/api/v0/contarKit'+ FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        url:servidor+ '/api/v0/contar_registros',// Url que se envia para la solicitud esta en el web php es la ruta
         method: "GET",             // Tipo de solicitud que se enviará, llamado como método
-        data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        data: null,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
     
-          // console.log(data);
-          $('#spanCountKit').html(data);
+          console.log(data);
+          $('#spanCountKit').html(data.items);
         },
         error: function () {
             mensaje = "error";
