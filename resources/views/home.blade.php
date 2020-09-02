@@ -6,7 +6,7 @@
     <div class="container">
       
        
-          <h4 align="center"><span class="glyphicon glyphicon-cog "  aria-hidden="true"></span> Administración web de Supercito </h4>
+          <h4 style="text-align: center"><span class="glyphicon glyphicon-cog "  aria-hidden="true"></span> Administración web de Supercito </h4>
        
         
    

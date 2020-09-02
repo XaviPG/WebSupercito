@@ -256,4 +256,29 @@ class OrdenController extends Controller
 
     }
 
+    public function saber_si_hay_un_nuevo_pedido(Request $request)
+    {
+        $code='500';
+        $message ='error';
+        $items =null;
+
+        $conteo= Orden::where("idestado","1")->count();
+        // $conteo = '2';
+        if ($conteo > $request->conteo) {
+            $items = $conteo;
+        }else {
+            $items = 0;
+        }
+        $code = '200';
+        $message = 'ok';
+
+        $result =   array(
+            'items'     => $items,
+            'code'      => $code,
+            'message'   => $message
+        );
+        return response()->json($result);
+
+    }
+
 }

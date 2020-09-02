@@ -67,7 +67,6 @@
 		</form>
 
     </div>
- 
 	<div class="card-footer">
 		@include('z_admin.Usuarios.tabla')
 		@include('z_admin.Usuarios.z_modal')

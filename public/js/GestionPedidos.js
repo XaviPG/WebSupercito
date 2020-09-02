@@ -3,7 +3,12 @@ var servidor="http://127.0.0.1:8000";
 $( document ).ready(function() {
 
   contar_Orden();
+  //saber_si_hay_nuevas_ordenes();
   
+  setInterval(() => {
+    saber_si_hay_nuevas_ordenes();
+  }, 10000);
+
 });
 
 
@@ -499,3 +504,48 @@ function pedidos_asignarCourier(idCourier) {
 $('#filtroPedidos').keyup(function (e) {
   cargar_tablaPedidos($('#filtroPedidos').val());
 });
+
+
+function saber_si_hay_nuevas_ordenes() {
+
+  // alert($('#spanCountOrden').html());
+
+  var FrmData=
+    {
+      conteo: $('#spanCountOrden').html(),
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: servidor+'/api/v0/saber_si_hay_un_nuevo_pedido',// Url que se envia para la solicitud esta en el web php es la ruta
+        method: "GET",             // Tipo de solicitud que se enviará, llamado como método
+        data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+        {
+    
+          console.log('la diferencia',data);
+
+          if (data.code=='200') {
+            if (data.items != 0) {
+              $('#spanCountOrden').attr('style','background:red');
+              // $('#spanCountOrden').html(data);
+              contar_Orden();
+
+            } else {
+              
+            }
+          } 
+
+          
+        },
+        error: function () {
+            mensaje = "OCURRIO UN ERROR : Archivo->GestionOrden.js, funcion->saber_si_hay_nuevas_ordenes()";
+            swal(mensaje);
+        }
+      });
+ }
