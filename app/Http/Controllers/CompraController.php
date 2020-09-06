@@ -99,7 +99,6 @@ class CompraController extends Controller
 
     public function ComprarProducto(Request $request)
     {
-      //return response()->json($request);
         $code='';
         $message ='';
         $items ='';
@@ -121,7 +120,8 @@ class CompraController extends Controller
                   $items->idUsuario = $validad->id;
                   $items->idestado=$estado->id;
                   $items->idTipoPago = $request->idTipoPago;
-                  $items->Orden = 'super-orden-'.strval(str_pad(Orden::count()+1, 15, "0", STR_PAD_LEFT));
+                  // $items->Orden = 'super-orden-'.strval(str_pad(Orden::count()+1,0, "0", STR_PAD_LEFT));
+                  $items->Orden = strval(str_pad(Orden::count()+1,0, "0", STR_PAD_LEFT));
                   $fecha =Carbon::now();
                   $items->fechaOrden= $fecha->format('Y-m-d');
                   $items->total = $request->total;
@@ -136,6 +136,7 @@ class CompraController extends Controller
                       $itemsCompra->idOrdenar = $items->id;
                       $itemsCompra->idRegistros = $dato->id;
                       $itemsCompra->cantidad = $dato->Carritocantidad;
+                      $itemsCompra->valorPromocion = $dato->PrecioPromocionConDescuento;
                       $itemsCompra->save();
 
                       $promocion = RegistroPromociones::find($dato->id);

@@ -98,7 +98,7 @@ class UserController extends Controller
                     );
 
         return response()->json($result);
-}    
+}
     /**
      * Display the specified resource.
      *
@@ -164,18 +164,9 @@ class UserController extends Controller
     // update
     public function update($nome_token_user='',Request $request)
     {
-        // return response()->json('hol');
         $code='';
         $message ='';
         $items ='';
-        // $result =   array(
-        //     'items'     => [$request->nome_token ,$nome_token_user],
-        //     'code'      => '200',
-        //     'message'   => $message
-        // );
-
-        // return response()->json($result);
-
         if (empty($nome_token_user)) {
 
             $code='403';
@@ -183,23 +174,32 @@ class UserController extends Controller
             $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
 
         }else{
-
             $validad = User::where('nome_token',$nome_token_user)->first();
-
             if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
                 $code='403';
                 $items = 'null';
                 $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
-
             } else {
-
+              // $image = base64_decode(str_replace(',', '',$request->imagen));
+              // $image_name= 'file_name.jpg';
+              // file_put_contents(public_path("/storage/Usuarios/da.jpg"), $image);
+              file_put_contents(public_path("/storage/Usuarios/da.jpg"),base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->imagen)));
+              return $request;
+                $url = null;
+                if ($request->imagen != null) {
+                  try {
+                    $fileName = $request->cedula.'.'.$request->file('imagen')->extension();
+                    $url="storage/Usuarios/".$fileName;
+                    $path = $request->file('imagen')->move(public_path("/storage/Usuarios/"),$fileName);
+                    //$photoUrl = url('/'.$fileName);
+                  } catch (\Exception $e) {
+                  }
+                }
                 $code = '200';
-
                 $items = User::where("nome_token",$request->nome_token)->first();
                 try {
                     $items->idtipo = (TipoUsuario::where('nome_token',$request->nome_token_tipo)->first())->id;
                 } catch (\Throwable $th) {
-                    
                 }
                 $items->name = $request->name;
                 $items->email = $request->email;
@@ -207,8 +207,8 @@ class UserController extends Controller
                 $items->celular = $request->celular;
                 $items->password = bcrypt($request->password);
                 $items->password2 = $request->password;
+                $items->imagen = $url;
                 $items->update();
-
                 $message = 'OK';
 
             }
@@ -276,7 +276,7 @@ class UserController extends Controller
     //public function Filtro($value='')
     {
         // $items = User::with('tipo')->where([["estado_del","1"]])->first();//->orderBy('name', 'desc')->get();
-        
+
 
         $code='';
         $message ='';
@@ -317,49 +317,49 @@ class UserController extends Controller
     public function FiltroCourier($nome_token_user='',Request $request)
     //public function Filtro($value='')
     {
-    
+
         // $tipo = TipoUsuario::where('cod','003')->first();
         // $items = User::with('tipo')->where([["estado_del","1"],["idtipo","$tipo->id"],["name","like","%$request->value%"]])->orderBy('name', 'desc')->get();
-        
-    
+
+
         $code='';
         $message ='';
         $items ='';
-    
+
         if (empty($nome_token_user)) {
-    
+
             $code='403';
             $items = 'null';
             $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
-    
+
         }else{
-    
+
             $validad = User::with('tipo')->where('nome_token',$nome_token_user)->first();
-    
+
             if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
                 //no existe ese usuarios o fue dado de baja.
             } else {
                 try {
                     $tipo = TipoUsuario::where('cod','003')->first(); //Courier
-    
+
                     $code = '200';
                     $items = User::with('tipo')->where([["estado_del","1"],["idtipo","$tipo->id"],["name","like","%$request->value%"]])->orderBy('name', 'desc')->get();
                     $message = 'OK';
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
-               
-    
+
+
             }
-    
+
         }
-    
+
         $result =   array(
                         'items'     => $items,
                         'code'      => $code,
                         'message'   => $message
                     );
-    
+
         return response()->json($result);
     }
 
@@ -434,7 +434,7 @@ class UserController extends Controller
         $items ='';
         //return response()->json("dsadasd");
         try {
-   
+
             $items = User::where([["estado_del","1"],["email",$request->email]])
                             ->orWhere([["estado_del","1"],["cedula",$request->cedula]])
                             // ->orWhere([["estado_del","1"],["celular",$request->celular]])
@@ -460,7 +460,7 @@ class UserController extends Controller
                 $items->estado_del = '1';
                 $items->nome_token = str_replace($ignorar,"",bcrypt(Str::random(10)));
                 $items->save();
-        
+
                 $items = User::with("tipo")->where("nome_token",$items->nome_token)->first();
 
                 $code = '200';
@@ -512,4 +512,3 @@ class UserController extends Controller
     }
 
 }
-

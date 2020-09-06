@@ -28,7 +28,7 @@ class PromocionDelProductoController extends Controller
     {
         $code='';
         $message ='';
-        $items ='';        
+        $items ='';
         if($request->idProducto == null){
             $code='403';
             $items = 'null';
@@ -75,11 +75,11 @@ class PromocionDelProductoController extends Controller
                         $items = new PromocionDelProducto();
                         $items->idProducto = $Producto['id'];
                         $items->descuento = $request->descuento;
-                        $items->stock = $request->stock;  
+                        $items->stock = $request->stock;
                         $items->fecha_inicio = $request->fecha_inicio;
-                        $items->fecha_fin = $request->fecha_fin;    
+                        $items->fecha_fin = $request->fecha_fin;
                         $items->estado_del = "1";
-                        $items->save();       
+                        $items->save();
                         $Producto->stock = $Producto->stock - $request->stock;
                         $Producto->update();
                         $code = '200';
@@ -116,7 +116,7 @@ class PromocionDelProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-  
+
 
     /**
      * Display the specified resource.
@@ -160,12 +160,12 @@ class PromocionDelProductoController extends Controller
      */
     public function destroy(Request $request)
     {
-       
+
        $code='';
        $message ='';
        $items ='';
 
-       
+
 
                $code = '200';
                $items = PromocionDelProducto::where("id",$request->id)->first();
@@ -173,7 +173,7 @@ class PromocionDelProductoController extends Controller
                $items->update();
                $message = 'OK';
 
-       
+
        $result =   array(
                        'items'     => $items,
                        'code'      => $code,
@@ -185,8 +185,8 @@ class PromocionDelProductoController extends Controller
 
     public function Filtro(Request $request)
     {
-        
-        
+
+
         $code='';
         $message ='';
         $items ='';
@@ -208,17 +208,17 @@ class PromocionDelProductoController extends Controller
 
     public function ProductosActivas(Request $request)
     {
-        
+
         $code='';
         $message ='';
         $items ='';
 
-     
+
         $code = '200';
-        $items = Producto::with(['PromocionesdelProducto'])->where('estado_del','1')->orderBy('NAME', 'desc')->limit(10)->get();
+        $items = Producto::with(['PromocionesdelProducto'])->where([['estado_del','1'],['stock','>',0]])->orderBy('NAME', 'desc')->limit(10)->get();
         $message = 'OK';
 
-        
+
 
         $result =   array(
                         'items'     => $items,
@@ -230,17 +230,17 @@ class PromocionDelProductoController extends Controller
     }
     public function ProductosPorid(Request $request)
     {
-        
+
         $code='';
         $message ='';
         $items ='';
 
-     
+
         $code = '200';
         $items = Producto::with(['PromocionesdelProducto'])->where([["estado_del","1"],["id",$request->id]])->orderBy('NAME', 'desc')->limit(20)->first();
         $message = 'OK';
 
-        
+
 
         $result =   array(
                         'items'     => $items,
@@ -250,6 +250,6 @@ class PromocionDelProductoController extends Controller
         //
         return response()->json($result);
     }
-  
+
 
 }

@@ -7,7 +7,7 @@ use App\EstadoVenta;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Carbon\Carbon;
 class OrdenController extends Controller
 {
     /**
@@ -48,14 +48,14 @@ class OrdenController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-   
+
     public function show(Request $request)
-    {   
+    {
         $code ='';
         $items ='';
         $message = '';
-        
-        
+
+
         try{
             $items = Orden::with(['TipoPago','Courier','Cliente','Detalle','Estado'])->where('id',$request->nome_token)->first();
         } catch (\Throwable $th) {
@@ -113,7 +113,7 @@ class OrdenController extends Controller
     {
       $code='200';
       $message ='';
-      $items =Orden::with(['TipoPago','Estado'])->where([['idestado',2],['idcourier',$request->idcourier]])->get();
+      $items =Orden::with(['TipoPago','Estado','Usuarios'])->where([['idestado',2],['idcourier',$request->idcourier]])->get();
       $result =   array(
           'items'     => $items,
           'code'      => $code,
@@ -137,7 +137,13 @@ class OrdenController extends Controller
           $message ='ERROR';
             //no existe ese usuarios o fue dado de baja.
         } else {
-          $items = Orden::with('Compras','TipoPago','Estado','Usuarios')->where('idUsuario',$validad->id)->get();
+          if ($request->fechaInicio != null && $request->fechafinal != null) {
+            $from = date($request->fechaInicio);
+            $to = date($request->fechafinal);
+            $items = Orden::with('Compras','TipoPago','Estado','Usuarios')->where('idUsuario',$validad->id)->whereBetween('fechaOrden', [$from,$to])->get();
+          }else {
+            $items = Orden::with('Compras','TipoPago','Estado','Usuarios')->where('idUsuario',$validad->id)->limit(4)->get();
+          }
         }
       }
       $result =   array(
@@ -151,7 +157,7 @@ class OrdenController extends Controller
 
     public function SoloPedidos(Request $request)
     {
-        
+
         $code='';
         $message ='';
         $items ='';
@@ -168,20 +174,20 @@ class OrdenController extends Controller
     public function AsignarCourier(Request $request) // paso dos de la venta es asignar el courier
     {
         // return response()->json($request);
-       
+
         $code='';
         $message ='';
         $items ='';
 
         try {
             $items = Orden::where("id",$request->idOrden)->first();
-         
+
         // como la venta pasa al 2 nivel que es asigar el courier entonces se debe cambiar el estado de la venta.
         $estado = EstadoVenta::where('cod','002')->first();
-        
+
         $items->idestado = $estado->id;
-        
-       
+
+
         $courier = User::where('id',$request->nome_token_courier)->first();
         $items->idcourier = $courier->id;
         //return response()->json($items);
@@ -195,17 +201,17 @@ class OrdenController extends Controller
         } catch (\Throwable $th) {
             return response()->json($th);
         }
-        
+
         return response()->json($result);
     }
 
     public function todasLasVentas(Request $request)
     {
-        ///return response()->json($request); 
+        ///return response()->json($request);
         $code='500';
         $message ='error';
         $items =null;
- 
+
         try {
             $estado=EstadoVenta::where("cod", "001")->first();
             $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where("idestado",'<>' ,$estado->id)->get();
@@ -217,7 +223,7 @@ class OrdenController extends Controller
             //throw $th;
         }
 
-        
+
 
         $result =   array(
             'items'     => $items,
@@ -241,7 +247,7 @@ class OrdenController extends Controller
 
             $code='200';
             $message = 'ok';
-        
+
 
         } catch (\Throwable $th) {
             //throw $th;

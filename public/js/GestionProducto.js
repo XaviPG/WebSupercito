@@ -126,7 +126,7 @@ function crear_tablaProductos_v2(data) {
                  html+= "<button type='button' value="+data.id+" style='color: black;' class='abrirmodal'><i class='fa fa-tags' aria-hidden='true'></i></button>";
                  html+= `<button id="boton_p_${data.id}" style='color: black;'  onclick="GP_agregar_imagen_producto(${data.id})"><i class="fa fa-picture-o" aria-hidden="true"></i></button>`;
                  html+= `<button type="button"style='color: black;' onclick="GP_verModalProductos(${data.id})"><i class="fa fa-eye" aria-hidden="true"></i></button>`;
-            
+
                 return `${html}`;
                 // return `<button>hola</button>`;
 
@@ -142,7 +142,6 @@ function crear_tablaProductos_v2(data) {
 var id = '';
 var idcan = '';
 $('body').on('click','.abrirmodal',function(){
-
   $('#IDcantidad').val('');
   idcan = '',
   idcan=$(this).val();
@@ -158,10 +157,10 @@ $('body').on('click','.abrirmodal',function(){
    })
    cargartablaDescuento();
    $('#modaiddescuentoCantidad').modal('show');
-
+   console.log(informacion)
    $('#id_Procu_DE').val(informacion[0]);
-   $('#IDcantidad').val(informacion[4]);
-   $('#IDcantidad1').attr({"min":informacion[4]});
+   $('#IDcantidad').val(informacion[2]);
+   $('#IDcantidad1').attr({"min":informacion[2]});
    idcan = informacion[4];
  });
  ////////////////////////////////////////////////////////////////////////////////////////////
@@ -744,7 +743,7 @@ $('#frmProductos_img_modificar').on('submit',function (e) {
 
 ////////////////////////////////////////////////////////////////////////////////////
 function GP_verModalProductos(id_busqueda) {
-  
+
   $('#tabla_infor_producto').html('');
   var FrmData = {
     idProducto : id_busqueda,
@@ -758,7 +757,7 @@ function GP_verModalProductos(id_busqueda) {
   $.ajax({
     url: `${servidor}/api/v0/productos_show`,// Url que se envia para la solicitud esta en el web php es la ruta
     method: "GET",             // Tipo de solicitud que se enviará, llamado como método
-    data: FrmData,       
+    data: FrmData,
     success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
     {
       // debugger
@@ -772,10 +771,10 @@ function GP_verModalProductos(id_busqueda) {
           <div class="w-100"></div>
         <div class="col"><strong>Peso: </strong>${data.items.PESOITEM}</div> <br>
           <div class="w-100"></div>
-        <div class="col"><strong>Disponibles: </strong>${data.items.stock}</div> <br>          
+        <div class="col"><strong>Disponibles: </strong>${data.items.stock}</div> <br>
           <div class="w-100"></div>
-         
-   
+
+
       `;
       $('#tabla_infor_producto').html(fila);
       $(`.frmProductos_modal`).modal('show');
@@ -794,7 +793,7 @@ function GP_verModalProductos(id_busqueda) {
 //frmImportarProductos
 
 $('#frmImportarProductos').on('submit',function (e) {
-  
+
   e.preventDefault();
   $('#enespera').show();
   var FrmData = new FormData(this);
@@ -836,7 +835,7 @@ $('#frmImportarProductos').on('submit',function (e) {
         error: function () {
             mensaje = "OCURRIO UN ERROR: Archivo->GestionProductos.js , funcion->frmProductos_img_modificar";
             swal(mensaje);
-            
+
         }
       });
 
@@ -846,4 +845,3 @@ $('#frmImportarProductos').on('submit',function (e) {
   });
 
 });
-
