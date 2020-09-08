@@ -48,7 +48,21 @@
 		  </div>
 
 		  <div class="form-group row">
-		    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Password:</label>
+		    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Dirección:</label>
+		    <div class="col-sm-10">
+		      <input type="text" name="direccion" class="form-control form-control-sm limpiar" id="txt_direccion_u" placeholder="col-form-label-sm" required>
+		    </div>
+		  </div>
+
+		  <div class="form-group row">
+		    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Referencia:</label>
+		    <div class="col-sm-10">
+		      <input type="text" name="referencia" class="form-control form-control-sm limpiar" id="txt_referencia_u" placeholder="col-form-label-sm" required>
+		    </div>
+		  </div>
+
+		  <div class="form-group row">
+		    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Contraseña:</label>
 		    <div class="col-sm-9">
 		      <input type="text"  autocomplete="new-password" class="form-control form-control-sm limpiar password" id="txt_password_u" placeholder="col-form-label-sm" required>
 			</div>
@@ -67,6 +81,7 @@
 		</form>
 
     </div>
+
 	<div class="card-footer">
 		@include('z_admin.Usuarios.tabla')
 		@include('z_admin.Usuarios.z_modal')

@@ -114,12 +114,12 @@ function crear_tablaTipoUsuarios_v2(data) {
           //   }
           // },
           {
-              title: ' Tipo de usuario',
+              title: 'TIPO DE USUARIO',
               width: ancho,
               data: 'descripcion'
           },
           {
-              title: 'Acciones',
+              title: 'ACCIONES',
               width: ancho,
               data: null,
               render: function (data, type, row) {

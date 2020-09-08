@@ -11628,7 +11628,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sLengthMenu": "Filtrar _MENU_ Datos", /*Show _MENU_ entries*/
+			"sLengthMenu": "Mostrar _MENU_ entradas", /*Show _MENU_ entries*/
 	
 	
 			/**
@@ -11719,7 +11719,7 @@
 			 *  @dtopt Language
 			 *  @name DataTable.defaults.language.searchPlaceholder
 			 */
-			"sSearchPlaceholder": "buscar....",
+			"sSearchPlaceholder": "    ",
 	
 	
 			/**

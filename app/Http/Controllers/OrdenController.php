@@ -113,7 +113,7 @@ class OrdenController extends Controller
     {
       $code='200';
       $message ='';
-      $items =Orden::with(['TipoPago','Estado'])->where([['idestado',2],['idcourier',$request->idcourier]])->get();
+      $items =Orden::with(['TipoPago','Estado', 'Usuarios'])->where([['idestado',2],['idcourier',$request->idcourier]])->get();
       $result =   array(
           'items'     => $items,
           'code'      => $code,
