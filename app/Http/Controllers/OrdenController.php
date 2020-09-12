@@ -201,20 +201,29 @@ class OrdenController extends Controller
 
     public function todasLasVentas(Request $request)
     {
-        ///return response()->json($request); 
+        // return response()->json($request); 
         $code='500';
         $message ='error';
         $items =null;
- 
+  
         try {
             $estado=EstadoVenta::where("cod", "001")->first();
-            $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where("idestado",'<>' ,$estado->id)->get();
-
+            if(empty($request->fecha_inicio)||($request->fecha_fin)){
+             $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where(
+                    "idestado",'<>' ,$estado->id)->get();
+    
+            }else{
+                $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where(
+                    "idestado",'<>' ,$estado->id)->whereDate("fechaOrden",">=",$request->fecha_inicio)->whereDate("fechaOrden","<=",$request->fecha_fin)->get();
+    
+            }
+           
+           
             $code='200';
             $message = 'ok';
 
         } catch (\Throwable $th) {
-            //throw $th;
+            $items = $th->getMessage;
         }
 
         
