@@ -163,7 +163,7 @@ Route::get('/v0/consultar_ubicacion_courier/{data?}','UserController@consultar_u
 Route::get('/v0/ordenes_show/{data?}','OrdenController@show');
 Route::post('/v0/ordenes_finalizar/{data?}','OrdenController@finalizarOrden');
 
-Route::get('/v0/contar_registros','RegistroPromocionesController@contarRegistros');
+Route::get('/v0/contar_registros','KitController@contar');
 
 Route::get('/v0/saber_si_hay_un_nuevo_pedido/{data?}','OrdenController@saber_si_hay_un_nuevo_pedido');
 

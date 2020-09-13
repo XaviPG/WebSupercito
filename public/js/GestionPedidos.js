@@ -484,6 +484,7 @@ function pedidos_asignarCourier(idCourier) {
 		    	cargar_tablaPedidos('');
           $(".frmCourier_modal").modal("hide");
           contar_Orden();
+          contar_Venta();
 		    },
 		    error: function () {
 		        mensaje = "OCURRIO UN ERROR: archivo->GestionPedidos.js , función->pedidos_asignarCourier()";

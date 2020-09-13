@@ -20,10 +20,16 @@ class KitController extends Controller
     {
         //
     }
-
+ 
 
     public function contar(Request $request){
-        $conteo=  kit::where('idRegistro',$request->idRegistro)->count();
+        
+        // $conteo=  kit::where('idRegistro',$request->idRegistro)->count();
+        $conteo=DB::table('kits')
+                    ->select('idRegistro', DB::raw('count(*) as total'))
+                    ->groupBy('idRegistro')
+                    ->where('estado_del',"1")
+                    ->count();
         return response()->json($conteo);
     }
   

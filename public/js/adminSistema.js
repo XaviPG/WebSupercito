@@ -151,6 +151,7 @@ $('#btnVerFrmVentas').click(function (e) {
 //boton Pedidos
 $('#btnVerFrmPedidos').click(function (e) {
 	ocultar();
+	$('#spanCountOrden').attr('style','background:gray');
 	$("#menuPanel").html("Panel de Control / Pedidos");
   cargar_tablaPedidos('');
 	$('#cardPedidos').show();

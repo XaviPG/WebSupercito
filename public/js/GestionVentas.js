@@ -154,20 +154,26 @@ function crear_tablaVentas_v2(data) {
                 var color=``;
                 console.log(data);
                 if (data.estado.cod===`002`) {
-                  color=`info`;
-                  descripcion = `La venta está en proceso...`;
+                  // color=`info`;
+                  // descripcion = `En Proceso`;
+                  var html = `
+                  <th ><i style="color:green;" id="descrip" aria-hidden="true">En proceso</i></th>
+                  `;
                 }
                 if (data.estado.cod===`003`) {
-                  color=`secondary`;
-                  descripcion = `La venta está en finalizada...`;
+                  //  color=`secondary`;
+                  // descripcion = `Finalizado`;
+                  var html = `
+                  <th ><i style="color:blue;" id="descrip" aria-hidden="true">Finalizado</i></th>
+                  `;
                 }
-                var html = `
-                    <a id="popover_${data.nome_token}" tabindex="0" class="btn btn-sm btn-${color} popover-dismiss" style="border-radius: 100%;" data-placement="top" role="button" data-toggle="popover" data-trigger="focus" data-content="${descripcion}"><i class="fa fa-circle-o-notch" aria-hidden="true"></i></a>
-                `;
-                $(`#popover_${data.nome_token}`).off('click');
-                $(`#popover_${data.nome_token}`).on('click',function(e) {
-                  $(`#popover_${data.nome_token}`).popover('show');
-                });
+                // var html = `
+                //     <th ><i style="color:red;" id="descrip" aria-hidden="true">${descripcion}</i></th>
+                // `;
+                // $(`#popover_${data.nome_token}`).off('click');
+                // $(`#popover_${data.nome_token}`).on('click',function(e) {
+                //   $(`#popover_${data.nome_token}`).popover('show');
+                // });
 
                 return `${html}`;
                 // return `<button>hola</button>`;
