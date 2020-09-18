@@ -167,3 +167,4 @@ Route::get('/v0/contar_registros','KitController@contar');
 
 Route::get('/v0/saber_si_hay_un_nuevo_pedido/{data?}','OrdenController@saber_si_hay_un_nuevo_pedido');
 
+Route::get('/v0/notificaciones_ordenes/{data?}','NotificacionController@filtro');

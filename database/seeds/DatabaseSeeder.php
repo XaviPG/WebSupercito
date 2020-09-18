@@ -128,6 +128,14 @@ class DatabaseSeeder extends Seeder
             'longitud' => '-80.16894599999999',
           
         ]);
+
+        DB::table('notificacions')->insert([
+            'idusuario' => '1',
+            'mensaje' => 'Hola',
+            'estado_del' => '1',
+        ]);
+
+
         // DB::table('productos')->insert([
         //     'id_foraneo'          => '4',
         //     'cod_barra'           => '7730698316062',
