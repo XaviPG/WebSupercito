@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use App\User;
 class LoginController extends Controller
 {
     /*
@@ -25,7 +25,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/logueoAdmin';
+    // protected $redirectTo = $this->validarLogin();
 
     /**
      * Create a new controller instance.
@@ -36,4 +37,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function validatarLogin()
+    {
+        if(auth()->User()->idtipo!=1){
+            auth()->logout();
+            return redirect('/login');
+        }else{
+
+            return redirect('/home');
+        }
+    }
+
 }

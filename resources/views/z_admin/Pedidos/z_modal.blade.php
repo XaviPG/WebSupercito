@@ -5,7 +5,7 @@
       <div class="modal-content">
         <div id="header"class=" modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Datos del Pedido</h4>
+          <h4 class="modal-title">Datos de la orden</h4>
         </div>
  
 

@@ -19,6 +19,13 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             return redirect('/home');
+            // if(Auth::user()->idtipo==1){
+            //     return redirect('/home');
+
+            // }else{
+            //     return redirect('/');
+            // }
+           
         }
 
         return $next($request);

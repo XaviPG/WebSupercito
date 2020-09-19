@@ -15,9 +15,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function loguearAdmin()
     {
-        //
+      
+        if(auth()->User()->idtipo!=1){
+            auth()->logout();
+            return redirect('/login');
+        }else{
+
+            return redirect('/home');
+        }
     }
 
     /**
@@ -101,7 +108,7 @@ class UserController extends Controller
                     );
 
         return response()->json($result);
-}    
+}
     /**
      * Display the specified resource.
      *
@@ -202,7 +209,7 @@ class UserController extends Controller
                 try {
                     $items->idtipo = (TipoUsuario::where('nome_token',$request->nome_token_tipo)->first())->id;
                 } catch (\Throwable $th) {
-                    
+
                 }
                 $items->name = $request->name;
                 $items->email = $request->email;
@@ -281,7 +288,7 @@ class UserController extends Controller
     //public function Filtro($value='')
     {
         // $items = User::with('tipo')->where([["estado_del","1"]])->first();//->orderBy('name', 'desc')->get();
-        
+
 
         $code='';
         $message ='';
@@ -322,49 +329,49 @@ class UserController extends Controller
     public function FiltroCourier($nome_token_user='',Request $request)
     //public function Filtro($value='')
     {
-    
+
         // $tipo = TipoUsuario::where('cod','003')->first();
         // $items = User::with('tipo')->where([["estado_del","1"],["idtipo","$tipo->id"],["name","like","%$request->value%"]])->orderBy('name', 'desc')->get();
-        
-    
+
+
         $code='';
         $message ='';
         $items ='';
-    
+
         if (empty($nome_token_user)) {
-    
+
             $code='403';
             $items = 'null';
             $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
-    
+
         }else{
-    
+
             $validad = User::with('tipo')->where('nome_token',$nome_token_user)->first();
-    
+
             if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
                 //no existe ese usuarios o fue dado de baja.
             } else {
                 try {
                     $tipo = TipoUsuario::where('cod','003')->first(); //Courier
-    
+
                     $code = '200';
                     $items = User::with('tipo')->where([["estado_del","1"],["idtipo","$tipo->id"],["name","like","%$request->value%"]])->orderBy('name', 'desc')->get();
                     $message = 'OK';
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
-               
-    
+
+
             }
-    
+
         }
-    
+
         $result =   array(
                         'items'     => $items,
                         'code'      => $code,
                         'message'   => $message
                     );
-    
+
         return response()->json($result);
     }
 
@@ -439,7 +446,7 @@ class UserController extends Controller
         $items ='';
         //return response()->json("dsadasd");
         try {
-   
+
             $items = User::where([["estado_del","1"],["email",$request->email]])
                             ->orWhere([["estado_del","1"],["cedula",$request->cedula]])
                             // ->orWhere([["estado_del","1"],["celular",$request->celular]])
@@ -468,7 +475,7 @@ class UserController extends Controller
                 $items->estado_del = '1';
                 $items->nome_token = str_replace($ignorar,"",bcrypt(Str::random(10)));
                 $items->save();
-        
+
                 $items = User::with("tipo")->where("nome_token",$items->nome_token)->first();
 
                 $code = '200';

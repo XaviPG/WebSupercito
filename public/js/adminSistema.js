@@ -152,7 +152,7 @@ $('#btnVerFrmVentas').click(function (e) {
 $('#btnVerFrmPedidos').click(function (e) {
 	ocultar();
 	$('#spanCountOrden').attr('style','background:gray');
-	$("#menuPanel").html("Panel de Control / Pedidos");
+	$("#menuPanel").html("Panel de Control / Ordenes");
   cargar_tablaPedidos('');
 	$('#cardPedidos').show();
 	//cargar_frm_ventas();

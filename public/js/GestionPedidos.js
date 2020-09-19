@@ -76,7 +76,7 @@ function pedidos_eliminar(nome_token) {
   {
     nome_token:  nome_token,
   }
-
+  console.log(FrmData);
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -85,7 +85,7 @@ function pedidos_eliminar(nome_token) {
 
   swal({
     title: "Estas seguro de esto?",
-    text: "Si aceptas, los datos seran eliminados!",
+    text: "Si aceptas, la orden será rechazada!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
@@ -94,18 +94,19 @@ function pedidos_eliminar(nome_token) {
     if (willDelete) {
 
       $.ajax({
-        url: servidor+'/api/v0/ventas_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
-        method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
+        url: servidor+'/api/v0/ordenes_rechazar',// Url que se envia para la solicitud esta en el web php es la ruta
+        method: "POST",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
-          swal("ACCION EXITOSA!", "Datos Eliminados", "success");
+          //  console.log(data);
+          swal("ACCION EXITOSA!", "Orden Rechazada", "success");
           cargar_tablaPedidos('');
         },
         error: function () {
-            mensaje = "OCURRIO UN ERROR: Archivo->GestionVentas.js , funcion->ventas_eliminar()";
+            mensaje = "OCURRIO UN ERROR: Archivo->GestionPedidos.js , funcion->Orden_eliminar()";
             swal(mensaje);
-
+            // console.log(FrmData);
         }
       });
 
@@ -177,7 +178,7 @@ function GP_crearTablaPedidos_2(data) {
 
                 var html = `
                   <button type="button" class="btn btn-sm btn-outline-info" onclick="pedidos_ver('${data.id}')" data-toggle="modal" ><i class="fa fa-eye" aria-hidden="true"></i></button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="pedidos_eliminar('${data.nome_token}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="pedidos_eliminar('${data.id}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 `;
 
                 return `${html}`;

@@ -23,8 +23,10 @@ class CreateOrdensTable extends Migration
             $table->date('fechaOrden');
             $table->string('total')->nullable();
             $table->string('finalizado','0')->default('0');
+            $table->string('rechazado','0')->default('0');
             $table->string('latitud')->nullable();
             $table->string('longitud')->nullable();
+            $table->string('estado_del','1')->default('1');
             $table->timestamps();
             
             

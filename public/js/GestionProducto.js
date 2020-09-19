@@ -101,16 +101,16 @@ function crear_tablaProductos_v2(data) {
               width:ancho,
               data: 'PRICE'
           },
-          // {
-          //   title: 'Marca',
-          //   width:ancho,
-          //   data: 'MARCA'
-          // },
-          // {
-          //   title: 'Peso',
-          //   width:ancho,
-          //   data: 'PESOITEM'
-          // },
+          {
+            title: 'Marca',
+            width:ancho,
+            data: 'MARCA'
+          },
+          {
+            title: 'Peso',
+            width:ancho,
+            data: 'PESOITEM'
+          },
           {
             title: 'Stock',
             width:ancho,
@@ -408,7 +408,7 @@ function crear_tablaDescuentoCantidad(data) {
                 var html='';
                 if(data.estado_del>0)
                 {
-                     var html = ``;
+                     var html = `${data.fecha_fin}`;
                 }else
                 {
                      html = ` ${data.fecha_fin}`;

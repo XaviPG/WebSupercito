@@ -117,7 +117,7 @@ $('#cmbTipoReporte').change(function (e) {
       // todos:'1'
       
     }
-     debugger
+    //  debugger
     $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -202,17 +202,24 @@ function crear_reportes_tablaVentas(data) {
   $('#tablaVentas_reporte').html('');
 
   $.each(data.items, function(a, item) { // recorremos cada uno de los datos que retorna el objero json n valores
-
+    var total=Number(`${item.total}`).toFixed(2);
+    var courier ='';
+                  if (item.idcourier==null) {
+                    courier = `<td><input type="hidden" value="">Indefinido</td>`;
+                   
+                  }else {
+                    courier = `<td><input type="hidden" value="${item.courier.name}">${item.courier.name}</td>`;
+                  }
     var fila="";
     fila=`
       <tr class="fila_${item.nome_token}">
           <th scope="row">${a+1}</th>
           <td><input type="hidden" value="${item.fechaOrden}">${item.fechaOrden}</td>
           <td><input type="hidden" value="${item.usuarios.name}">${item.usuarios.name}</td>
-          <td><input type="hidden" value="${item.courier.name}">${item.courier.name}</td>
+          ${courier}
           <td><input type="hidden" value="${item.tipo_pago.descricion}">${item.tipo_pago.descricion}</td>
           <td><input type="hidden" value="${item.estado.descripcion}">${item.estado.descripcion}</td>
-          <td><input type="hidden" value="${item.total}">${item.total}</td>
+          <td><input type="hidden" value="${item.total}">$ ${total}</td>
          
       </tr>
     `;

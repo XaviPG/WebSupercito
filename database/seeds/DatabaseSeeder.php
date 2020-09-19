@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('estado_ventas')->insert([
             'cod' => '002',
-            'descripcion' => 'En_proceso',
+            'descripcion' => 'En proceso',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
         DB::table('estado_ventas')->insert([

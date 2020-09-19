@@ -1,7 +1,7 @@
 <div class="card" id="cardPedidos">
 	<div class="panel panel-default">
 		<div class="panel-heading main-color-bg">
-		  <h3 class="panel-title">Pedidos</h3>
+		  <h3 class="panel-title">Ordenes</h3>
 		</div>
 		<div class="panel-body">
 <!-- 		<form class="needs-validation">
