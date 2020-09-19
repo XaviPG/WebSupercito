@@ -8,6 +8,8 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Notificacion;
+
 class OrdenController extends Controller
 {
     /**
@@ -184,6 +186,22 @@ class OrdenController extends Controller
         //return response()->json($items);
 
         $items->update();
+
+
+        ///CREAR NOTIFICACION
+        $notificacion = new Notificacion();
+        $notificacion->idusuario = $orden->idUsuario;
+        $notificacion->mensaje = "Le ha sido asignado su pepido al personal de entrega";
+        $notificacion->estado_del = "1";
+        $notificacion->save();
+        //se listan las notificaciones anterioress a esta para cambiarles el estado; 
+        // $listadenotificacionesdeesteusuario = Notificacion::where([['idusuario',$orden->idUsuario],['estado_del','1']])->get();
+        // $count = count($listadenotificacionesdeesteusuario);
+        ////
+        //se listan las notificaciones anterioress a esta para cambiarles el estado a cero; 
+        Notificacion::where([['idusuario',$orden->idUsuario],['estado_del','1'],['id','<>',$notificacion->id]])->update(['estado_del'=>0]);
+
+
         $result =   array(
             'items'     => $items,
             'code'      => $code,
