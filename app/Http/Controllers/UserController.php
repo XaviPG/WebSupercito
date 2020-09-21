@@ -15,9 +15,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function loguearAdmin()
     {
-        //
+
+        if(auth()->User()->idtipo!=1){
+            auth()->logout();
+            return redirect('/login');
+        }else{
+
+            return redirect('/home');
+        }
     }
 
     /**
@@ -79,6 +86,9 @@ class UserController extends Controller
                 $items->email = $request->email;
                 $items->cedula = $request->cedula;
                 $items->celular = $request->celular;
+                $items->direccion = $request->direccion;
+                $items->referencia = $request->referencia;
+                $items->imagen = $request->imagen;
                 $items->password = bcrypt($request->password);
                 $items->password2 = $request->password;
                 $items->estado_del = '1';
@@ -189,6 +199,8 @@ class UserController extends Controller
                 $items->email = $request->email;
                 $items->cedula = $request->cedula;
                 $items->celular = $request->celular;
+                $items->direccion = $request->direccion;
+                $items->referencia = $request->referencia;
                 $items->password = bcrypt($request->password);
                 //$items->password2 = $request->password;
                 //$items->imagen = $url;
@@ -476,6 +488,9 @@ class UserController extends Controller
                 $items->email = $request->email;
                 $items->cedula = $request->cedula;
                 $items->celular = $request->celular;
+                $items->direccion = $request->direccion;
+                $items->referencia = $request->referencia;
+                $items->imagen = $request->imagen;
                 $items->password = bcrypt($request->password);
                 $items->password2 = $request->password;
                 $items->estado_del = '1';

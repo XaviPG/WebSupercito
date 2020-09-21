@@ -23,23 +23,18 @@ class ProductoController extends Controller
     }
 
 
-    public function import()
-    {
-
+    public function import(){
         $code='500';
         $message ='error';
         $items = [];
-
         try {
             $array = Excel::toArray(new ProductoImport,request()->file('file'));
             foreach ($array[0] as $key => $value) {
             //estas preguntando a la base de datos si ese producto ya exite
             $producto = Producto::where([["estado_del","1"],["id_foraneo",$value[0]]])->first();
-            
             if (empty($producto["id_foraneo"])) { // esta vacio -- no existe en la base de datos..
                 $producto = new Producto();
             }
-
             $producto->id_foraneo=$value[0];    //idforaneo
             $producto->NAME=$value[1];    //nombre
             $producto->PRICE=$value[2];    //precio
@@ -48,26 +43,19 @@ class ProductoController extends Controller
             $producto->PESOITEM=$value[5];    //peso
             $producto->stock="3";    //stock
             $producto->estado_del="1";
-            
             $producto->save();
             array_push($items,$producto);
             }
-            
             $code = '200';
-            $message = 'ok';
-            
-
-
+            $message = 'ok'; 
         } catch (\Throwable $th) {
             //throw $th;
         }
-
         $result =   array(
             'items'     => $items,
             'code'      => $code,
             'message'   => $message
         );
-
         return response()->json($result);
        
     }

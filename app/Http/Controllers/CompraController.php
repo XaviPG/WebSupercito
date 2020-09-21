@@ -92,7 +92,7 @@ class CompraController extends Controller
         //
     }
     public function contar(){
-      $conteo= Compra::All()->count();
+      $conteo= Orden::where("estado_del","1")->where("idestado","<>",1)->count();
       return response()->json($conteo);
   }
 

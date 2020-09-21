@@ -19,18 +19,18 @@ class DatabaseSeeder extends Seeder
             'descripcion' => 'Admin',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
+        // DB::table('tipo_usuarios')->insert([
+        //     'cod' => '002',
+        //     'descripcion' => 'Farmaceutico',
+        //     'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
+        // ]);
         DB::table('tipo_usuarios')->insert([
             'cod' => '002',
-            'descripcion' => 'Farmaceutico',
-            'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
-        ]);
-        DB::table('tipo_usuarios')->insert([
-            'cod' => '003',
             'descripcion' => 'Courier',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
         DB::table('tipo_usuarios')->insert([
-            'cod' => '004',
+            'cod' => '003',
             'descripcion' => 'Cliente',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
@@ -42,6 +42,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'cedula' => '0000000000',
             'celular' => '0000000000',
+            'direccion' => 'Arrastradero',
+            'referencia' => 'Diagonal al colegio Francisco',
             'password' => bcrypt('adminadmin'),
             'password2' => 'adminadmin',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
@@ -53,6 +55,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'courier@courier.com',
             'cedula' => '0000000003',
             'celular' => '0000000003',
+            'direccion' => 'Arrastradero',
             'password' => bcrypt('courier'),
             'password2' => 'courier',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
@@ -64,6 +67,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'client@client.com',
             'cedula' => '0000000004',
             'celular' => '0000000004',
+            'direccion' => 'Arrastradero',
             'password' => bcrypt('client'),
             'password2' => 'client',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
@@ -71,12 +75,12 @@ class DatabaseSeeder extends Seeder
 
         DB::table('estado_ventas')->insert([
             'cod' => '001',
-            'descripcion' => 'Solicitud',
+            'descripcion' => 'Solicitado',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
         DB::table('estado_ventas')->insert([
             'cod' => '002',
-            'descripcion' => 'En_proceso',
+            'descripcion' => 'En proceso',
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
         DB::table('estado_ventas')->insert([
@@ -91,17 +95,17 @@ class DatabaseSeeder extends Seeder
             'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
         ]);
 
-        DB::table('estado_ventas')->insert([
-            'cod' => '005',
-            'descripcion' => 'Aceptado',
-            'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
-        ]);
+        // DB::table('estado_ventas')->insert([
+        //     'cod' => '005',
+        //     'descripcion' => 'Aceptado',
+        //     'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
+        // ]);
 
-        DB::table('estado_ventas')->insert([
-            'cod' => '005',
-            'descripcion' => 'Cancelado',
-            'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
-        ]);
+        // DB::table('estado_ventas')->insert([
+        //     'cod' => '005',
+        //     'descripcion' => 'Cancelado',
+        //     'nome_token' => str_replace($ignorar,"",bcrypt(Str::random(10))),
+        // ]);
         DB::table('tipo_pagos')->insert([
             'identificador' => '1',
             'descricion' => 'TRANSFERENCIA',
@@ -111,19 +115,27 @@ class DatabaseSeeder extends Seeder
             'descricion' => 'EFECTIVO',
         ]);
      
-        DB::table('ordens')->insert([
-            'idUsuario' => '3',
-            'idestado' => '1',
-            'idcourier' => '2',
-            'idTipoPago' => '1',
-            'Orden' => 'super-orden-000000000000001',
-            'fechaOrden' => '2020-05-09',
-            'total' => '2',
-            'finalizado' => '0',
-            'latitud' => '-0.843633',
-            'longitud' => '-80.16894599999999',
+        // DB::table('ordens')->insert([
+        //     'idUsuario' => '3',
+        //     'idestado' => '1',
+        //     'idcourier' => '2',
+        //     'idTipoPago' => '1',
+        //     'Orden' => 'super-orden-000000000000001',
+        //     'fechaOrden' => '2020-05-09',
+        //     'total' => '2',
+        //     'finalizado' => '0',
+        //     'latitud' => '-0.843633',
+        //     'longitud' => '-80.16894599999999',
           
+        // ]);
+
+        DB::table('notificacions')->insert([
+            'idusuario' => '1',
+            'mensaje' => 'Hola',
+            'estado_del' => '1',
         ]);
+
+
         // DB::table('productos')->insert([
         //     'id_foraneo'          => '4',
         //     'cod_barra'           => '7730698316062',

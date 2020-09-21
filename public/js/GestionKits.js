@@ -384,7 +384,7 @@ function limpiar() {
         {
     
           console.log(data);
-          $('#spanCountKit').html(data.items);
+          $('#spanCountKit').html(data);
         },
         error: function () {
             mensaje = "error";

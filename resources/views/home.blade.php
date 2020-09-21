@@ -56,8 +56,8 @@
             <a style="cursor:pointer;" id="btnVerFrmVentas"  class="list-group-item"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Ventas <span id="spanCountVenta" class="badge">..</span></a>
             <a style="cursor:pointer;" id="btnVerFrmPromocion" class="list-group-item"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Promociones <span id="spanCountPromocion" class="badge">..</span></a>
             <a style="cursor:pointer;" id="btnVerFrmkits" class="list-group-item"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Kits<span id="spanCountKit" class="badge">..</span></a>
-            <a style="cursor:pointer;" id="btnVerFrmUbicacion"  class="list-group-item"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Ubicación <span class="badge">39</span></a>
-            <a style="cursor:pointer;" id="btnVerFrmReportes" class="list-group-item"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Reportes <span class="badge">..</span></a>
+            <a style="cursor:pointer;" id="btnVerFrmUbicacion"  class="list-group-item"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Ubicación </a>
+            <a style="cursor:pointer;" id="btnVerFrmReportes" class="list-group-item"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Reportes </a>
           </div>
           
           {{-- <div class="well">

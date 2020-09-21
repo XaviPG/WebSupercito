@@ -46,6 +46,7 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Imports\\ProductoImport' => $baseDir . '/app/Imports/ProductoImport.php',
+    'App\\Notificacion' => $baseDir . '/app/Notificacion.php',
     'App\\Orden' => $baseDir . '/app/Orden.php',
     'App\\Posiciontrasnportista' => $baseDir . '/app/posiciontrasnportista.php',
     'App\\Producto' => $baseDir . '/app/Producto.php',

@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/cabeza', function () {
     return view('z_reportes.a_cuerpo');
 });
+
+Route::get('logueoAdmin','UserController@loguearAdmin');

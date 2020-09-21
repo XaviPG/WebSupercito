@@ -16,7 +16,7 @@
                                   
                             </div>
                             <br>
-                            <label>Datos de la producto </label>
+                            <label>Datos del producto </label>
                             
                             <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-calendar" ></i></div>

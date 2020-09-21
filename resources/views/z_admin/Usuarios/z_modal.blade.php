@@ -45,18 +45,31 @@
 			  </div>
 
 			  <div class="form-group row">
-			    <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Clave:</label>
-			    <div class="col-sm-8">
+		    <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Dirección:</label>
+		    <div class="col-sm-9">
+		      <input type="text" name="direccion" class="form-control form-control-sm" id="txt_direccion_u_modal" placeholder="col-form-label-sm" required>
+		    </div>
+		  </div>
+
+		  <div class="form-group row">
+		    <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Referencia:</label>
+		    <div class="col-sm-9">
+		      <input type="text" name="referencia" class="form-control form-control-sm" id="txt_referencia_u_modal" placeholder="col-form-label-sm" required>
+		    </div>
+		  </div>
+
+		  <div class="form-group row">
+			    <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Contraseña:</label>
+			    <div class="col-sm-7">
 			      <input type="password" class="form-control form-control-sm password" id="txt_password_u_modal" placeholder="col-form-label-sm" required>
 			    </div>
-			    {{-- <div class="col-sm-1"> --}}
-					<button  type="button" class=" ver_password"  placeholder="col-form-label-sm" > 
-					
-						<i class="fa fa-eye" aria-hidden="true"></i></button> 
-				
-						
-			      {{-- <label  type="submit" class="form-control form-control-sm" id="btnVerPassword" placeholder="col-form-label-sm" > <i class="fa fa-eye" aria-hidden="true"></i></label>  --}}
-			    {{-- </div> --}}
+			   
+					<!-- <button  type="button" class=" ver_password"  placeholder="col-form-label-sm" >  -->
+					<div class="col-sm-2">
+						<button  type="button" class="form-control form-control ver_password"  placeholder="col-form-label-sm" > <i class="fa fa-eye" aria-hidden="true"></i></button> 
+					</div>
+						<!-- <i class="fa fa-eye" aria-hidden="true"></i></button>  -->
+			
 			  </div>		  
 
 			  <div class="form-group row">

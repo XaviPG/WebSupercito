@@ -16,8 +16,8 @@
             <form id="frmTipoUsuarios" class="needs-validation">
     
               <div class="form-group row">
-                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Descripcion:</label>
-                <div class="col-sm-6">
+                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Descripción:</label>
+                <div class="col-sm-7">
                   <input type="text" class="form-control form-control-sm limpiar" id="txt_descripcion_t_u" placeholder="col-form-label-sm" required>
                 </div>
                 <div class="col-sm-3">

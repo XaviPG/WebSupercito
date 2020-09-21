@@ -1,4 +1,7 @@
 $( document ).ready(function(e) {
+  // $("#fechas").hide();
+  $("#hasta").hide();
+  $("#desde").hide();
   // console.log($('#cmb_tipo_reporte').val());
 });
 
@@ -67,6 +70,21 @@ $('#cmd').on("click",function (e) {
     });
     doc.save('sample-file.pdf');
 });
+$("#check_consultar").on("click",function () {
+
+  console.log("ahfkadhfksjdfhs",$("#check_consultar").prop('checked'));
+
+  if($("#check_consultar").prop('checked')==true){
+    $("#hasta").show(); 
+    $("#desde").show(); 
+  
+  }else {
+    $("#hasta").hide();
+    $("#desde").hide();
+  }
+  // $("#fecha_hasta").attr("hide", false);
+});
+
 
 $("#jqueryPrinf").on("click",function (e) {
   e.preventDefault();
@@ -86,20 +104,26 @@ $("#jqueryPrinf").on("click",function (e) {
   });
 });
 
+
 $('#cmbTipoReporte').change(function (e) {
 
   if ($('#cmbTipoReporte').val()=="ventas") {
+    var fecha1=$('#fecha_desde').val();
+    var fecha2=$('#fecha_hasta').val();
     var FrmData=
     {
-      value: "",
-      value2: 'ventas',
+      fecha_inicio:fecha1,
+      fecha_fin:fecha2
+      // todos:'1'
+      
     }
+    //  debugger
     $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
     });
- 
+  
     $.ajax({
       url: '/api/v0/todasLasVentas/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
       method: "GET",             // Tipo de solicitud que se enviará, llamado como método
@@ -107,6 +131,7 @@ $('#cmbTipoReporte').change(function (e) {
       success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
       {
           // crear_tablaVentas(data);
+          console.log("hola esto es una prueba:", data);
           crear_reportes_tablaVentas(data);
       },
       error: function () {
@@ -115,33 +140,33 @@ $('#cmbTipoReporte').change(function (e) {
       }
     });
   }
-  else if($('#cmbTipoReporte').val()=="usuarios") {
-    var FrmData=
-    {
-      value: "",
-      value2: 'usuarios',
-    }
-    $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-    });
+  // else if($('#cmbTipoReporte').val()=="usuarios") {
+  //   var FrmData=
+  //   {
+  //     value: "",
+  //     value2: 'usuarios',
+  //   }
+  //   $.ajaxSetup({
+  //         headers: {
+  //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //         }
+  //   });
  
-    $.ajax({
-      url: '/api/v0/todosUsuarios',// Url que se envia para la solicitud esta en el web php es la ruta
-      method: "GET",             // Tipo de solicitud que se enviará, llamado como método
-      //data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
-      success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
-      {
-          // crear_tablaVentas(data);
-          crear_reportes_tablaUsuario(data);
-      },
-      error: function () {
-          mensaje = "OCURRIO UN ERROR: Archivo->GestionReportes.js , funcion->cargar_tablaVentas()";
-          swal(mensaje);
-      }
-    });
-  }
+  //   $.ajax({
+  //     url: '/api/v0/todosUsuarios',// Url que se envia para la solicitud esta en el web php es la ruta
+  //     method: "GET",             // Tipo de solicitud que se enviará, llamado como método
+  //     //data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+  //     success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+  //     {
+  //         // crear_tablaVentas(data);
+  //         crear_reportes_tablaUsuario(data);
+  //     },
+  //     error: function () {
+  //         mensaje = "OCURRIO UN ERROR: Archivo->GestionReportes.js , funcion->cargar_tablaVentas()";
+  //         swal(mensaje);
+  //     }
+  //   });
+  // }
 });
 // $('#cmbTipoReporte').change(function (e) {
 
@@ -177,17 +202,24 @@ function crear_reportes_tablaVentas(data) {
   $('#tablaVentas_reporte').html('');
 
   $.each(data.items, function(a, item) { // recorremos cada uno de los datos que retorna el objero json n valores
-
+    var total=Number(`${item.total}`).toFixed(2);
+    var courier ='';
+                  if (item.idcourier==null) {
+                    courier = `<td><input type="hidden" value="">Indefinido</td>`;
+                   
+                  }else {
+                    courier = `<td><input type="hidden" value="${item.courier.name}">${item.courier.name}</td>`;
+                  }
     var fila="";
     fila=`
       <tr class="fila_${item.nome_token}">
           <th scope="row">${a+1}</th>
           <td><input type="hidden" value="${item.fechaOrden}">${item.fechaOrden}</td>
           <td><input type="hidden" value="${item.usuarios.name}">${item.usuarios.name}</td>
-          <td><input type="hidden" value="${item.courier.name}">${item.courier.name}</td>
+          ${courier}
           <td><input type="hidden" value="${item.tipo_pago.descricion}">${item.tipo_pago.descricion}</td>
           <td><input type="hidden" value="${item.estado.descripcion}">${item.estado.descripcion}</td>
-          <td><input type="hidden" value="${item.total}">${item.total}</td>
+          <td><input type="hidden" value="${item.total}">$ ${total}</td>
          
       </tr>
     `;

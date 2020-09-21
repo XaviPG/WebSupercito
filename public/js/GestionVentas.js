@@ -74,11 +74,11 @@ function crear_tablaVentas(data) {
 					<td><input type="hidden" value="${item.fecha}">${item.fecha}</td>
 	        // <td><input type="hidden" value="${item.usuario.name}">${item.usuario.name}</td>
 	        // <td><input type="hidden" value="${item.courier.name}">${item.courier.name}</td>
-	        // <td><input type="hidden" value="${item.total}">${item.total}</td>
+	        // <td><input type="hidden" value="${item.total}">$ ${item.total}</td>
 	        // <td><input type="hidden" value="${item.estado.descripcion}">${item.estado.descripcion}</td>
 	        <td>
 	          <button type="button" class="btn btn-sm btn-outline-info" onclick="ventas_ver_modal('${item.nome_token}')" data-toggle="modal" >Modificar</button>
-	          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="ventas_eliminar('${item.nome_token}')">Eliminar</button>
+	          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="ventas_eliminar('${item.id}')">Eliminar</button>
 	        </td>
 	    </tr>
 	  `;
@@ -132,7 +132,21 @@ function crear_tablaVentas_v2(data) {
             {
               title: 'TRANSPORTISTA',
               width:ancho,
-              data: 'courier.name',
+              data: null,
+              render: function ( data, type, row ) {
+                if (data.idcourier===null) {
+                  // color=`info`;
+                  // descripcion = `En Proceso`;
+                  var html = `
+                  <th ><i style="color:black;" id="descrip" aria-hidden="true">Indefinido</i></th>
+                  `;
+                  // $('#btn_ver').attr('disabled',true);
+                }else{
+                  var html = `${data.courier.name}`;
+                 
+                }
+                return `${html}`;
+              }
 
             },
             {
@@ -140,9 +154,12 @@ function crear_tablaVentas_v2(data) {
               width:ancho,
               data: null,
               render:function (data, type, row) {
-                var html = `$ ${data.total}`;
+                // var html =  `${data.total}`;
+                var html =  Number(`${data.total}`).toFixed(2);
+                // var html = Number((`${data.total}`).toFixed(2));
+                // parseFloat(Math.round(278.6 * 100) / 100).toFixed(2);
 
-                  return `${html}`;
+                  return `$ ${html}`;
               }
             },
             {
@@ -154,20 +171,33 @@ function crear_tablaVentas_v2(data) {
                 var color=``;
                 console.log(data);
                 if (data.estado.cod===`002`) {
-                  color=`info`;
-                  descripcion = `La venta está en proceso...`;
+                  // color=`info`;
+                  // descripcion = `En Proceso`;
+                  var html = `
+                  <th ><i style="color:green;" id="descrip" aria-hidden="true">En proceso</i></th>
+                  `;
                 }
                 if (data.estado.cod===`003`) {
-                  color=`secondary`;
-                  descripcion = `La venta está en finalizada...`;
+                  //  color=`secondary`;
+                  // descripcion = `Finalizado`;
+                  var html = `
+                  <th ><i style="color:blue;" id="descrip" aria-hidden="true">Finalizada</i></th>
+                  `;
                 }
-                var html = `
-                    <a id="popover_${data.nome_token}" tabindex="0" class="btn btn-sm btn-${color} popover-dismiss" style="border-radius: 100%;" data-placement="top" role="button" data-toggle="popover" data-trigger="focus" data-content="${descripcion}"><i class="fa fa-circle-o-notch" aria-hidden="true"></i></a>
-                `;
-                $(`#popover_${data.nome_token}`).off('click');
-                $(`#popover_${data.nome_token}`).on('click',function(e) {
-                  $(`#popover_${data.nome_token}`).popover('show');
-                });
+                if (data.estado.cod===`004`) {
+                  //  color=`secondary`;
+                  // descripcion = `Finalizado`;
+                  var html = `
+                  <th ><i style="color:red;" id="descrip" aria-hidden="true">Rechazada</i></th>
+                  `;
+                }
+                // var html = `
+                //     <th ><i style="color:red;" id="descrip" aria-hidden="true">${descripcion}</i></th>
+                // `;
+                // $(`#popover_${data.nome_token}`).off('click');
+                // $(`#popover_${data.nome_token}`).on('click',function(e) {
+                //   $(`#popover_${data.nome_token}`).popover('show');
+                // });
 
                 return `${html}`;
                 // return `<button>hola</button>`;
@@ -181,14 +211,23 @@ function crear_tablaVentas_v2(data) {
                 render: function (data, type, row) {
                   var finalizar ='';
                   if (data.finalizado=='1') {
-                    finalizar = `<button disabled type="button" class="col-4 btn btn-sm btn-outline-secondary"><i class="fa fa-circle-thin" aria-hidden="true"></i></button>`;
+                    finalizar = `<button  disabled type="button" class="col-4 btn btn-sm btn-outline-secondary"><i class="fa fa-circle-thin" aria-hidden="true"></i></button>`;
+                   
                   }else if(data.finalizado=='0'){
-                    finalizar = `<button type="button" class="col-4 btn btn-sm btn-outline-secondary" onclick="ventas_finalizar('${data.id}')"><i class="fa fa-circle-thin" aria-hidden="true"></i></button>`;
+                    finalizar = `<button  type="button" class="col-4 btn btn-sm btn-outline-secondary" onclick="ventas_finalizar('${data.id}')"><i class="fa fa-circle-thin" aria-hidden="true"></i></button>`;
+                  }
+                 var rechazar='';
+                  if( data.rechazado=='1'){
+                    rechazar = ` <button disabled type="button" id="btn_ver" class="col-4 btn btn-sm btn-outline-info"  data-toggle="modal" ><i class="fa fa-eye" aria-hidden="true"></i></button>
+                    `
+                  }else if(data.rechazado=='0'||data.rechazado==null){
+                    rechazar= ` <button type="button" id="btn_ver" class="col-4 btn btn-sm btn-outline-info" onclick="ventas_ver('${data.id}')" data-toggle="modal" ><i class="fa fa-eye" aria-hidden="true"></i></button>
+                    `
                   }
                   var html = `
                     <div class='row'>
-                    <button type="button" class="col-4 btn btn-sm btn-outline-info" onclick="ventas_ver('${data.id}')" data-toggle="modal" ><i class="fa fa-eye" aria-hidden="true"></i></button>
-                    <button type="button" class="col-4 btn btn-sm btn-outline-secondary" onclick="ventas_eliminar('${data.nome_token}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    ${rechazar}
+                    <button type="button" class="col-4 btn btn-sm btn-outline-secondary" onclick="ventas_eliminar('${data.id}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
                     ${finalizar}
                     </div>
                     `;
@@ -215,7 +254,7 @@ function ventas_eliminar(nome_token) {
   {
     nome_token:  nome_token,
   }
-
+  console.log(FrmData);
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -233,7 +272,7 @@ function ventas_eliminar(nome_token) {
     if (willDelete) {
 
       $.ajax({
-        url: '/api/v0/ventas_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        url: '/api/v0/orden_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
         method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito

@@ -86,6 +86,7 @@ function crear_tablaUsuarios(data) {
             <td><input type="hidden" value="${item.email}">${item.email}</td>
             <td><input type="hidden" value="${item.cedula}">${item.cedula}</td>
             <td><input type="hidden" value="${item.celular}">${item.celular}</td>
+            <td><input type="hidden" value="${item.direccion}">${item.direccion}</td>
             <td>
                <button type="button" class="btn btn-sm btn-outline-info" onclick="usuarios_ver('${item.nome_token}')" data-toggle="modal" >Modificar</button>
               <button type="button" class="btn btn-sm btn-outline-secondary" onclick="usuarios_eliminar('${item.nome_token}')">Eliminar</button>
@@ -152,6 +153,11 @@ function crear_tablaUsuarios_2(data) {
             title: 'CELULAR',
             width:ancho,
             data: 'celular'
+          },
+          {
+            title: 'DIRECCIÓN',
+            width:ancho,
+            data: 'direccion'
           },
           {
               title: 'ACCIONES',
@@ -271,6 +277,8 @@ function usuarios_ver(nome_token) {
         $('#txt_email_u_modal').val(data.items.email);
         $('#txt_cedula_u_modal').val(data.items.cedula);
         $('#txt_celular_u_modal').val(data.items.celular);
+        $('#txt_direccion_u_modal').val(data.items.direccion);
+        $('#txt_referencia_u_modal').val(data.items.referencia);
         $('#txt_password_u_modal').val(data.items.password2);
     },
     error: function () {
@@ -293,6 +301,8 @@ $('#frmUsuarios').on('submit',function (e) {
     email:$('#txt_email_u').val(),
     cedula: $('#txt_cedula_u').val(),
     celular: $('#txt_celular_u').val(),
+    direccion: $('#txt_direccion_u').val(),
+    referencia: $('#txt_referencia_u').val(),
     password: $('#txt_password_u').val(),
     password2: $('#txt_password_u').val(),
   }
@@ -364,6 +374,8 @@ $('#frmUsuarios_modificar').on('submit',function (e) {
     email:$('#txt_email_u_modal').val(),
     cedula: $('#txt_cedula_u_modal').val(),
     celular: $('#txt_celular_u_modal').val(),
+    direccion: $('#txt_direccion_u_modal').val(),
+    referencia: $('#txt_referencia_u_modal').val(),
     password: $('#txt_password_u_modal').val(),
     password2: $('#txt_password_u_modal').val(),
     nome_token:  $('#nome_token_u_modal').val(),
