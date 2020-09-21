@@ -168,7 +168,6 @@ class UserController extends Controller
         $message ='';
         $items ='';
         if (empty($nome_token_user)) {
-
             $code='403';
             $items = 'null';
             $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
@@ -180,21 +179,6 @@ class UserController extends Controller
                 $items = 'null';
                 $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
             } else {
-              // $image = base64_decode(str_replace(',', '',$request->imagen));
-              // $image_name= 'file_name.jpg';
-              // file_put_contents(public_path("/storage/Usuarios/da.jpg"), $image);
-              file_put_contents(public_path("/storage/Usuarios/da.jpg"),base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->imagen)));
-              return $request;
-                $url = null;
-                if ($request->imagen != null) {
-                  try {
-                    $fileName = $request->cedula.'.'.$request->file('imagen')->extension();
-                    $url="storage/Usuarios/".$fileName;
-                    $path = $request->file('imagen')->move(public_path("/storage/Usuarios/"),$fileName);
-                    //$photoUrl = url('/'.$fileName);
-                  } catch (\Exception $e) {
-                  }
-                }
                 $code = '200';
                 $items = User::where("nome_token",$request->nome_token)->first();
                 try {
@@ -206,21 +190,58 @@ class UserController extends Controller
                 $items->cedula = $request->cedula;
                 $items->celular = $request->celular;
                 $items->password = bcrypt($request->password);
-                $items->password2 = $request->password;
-                $items->imagen = $url;
+                //$items->password2 = $request->password;
+                //$items->imagen = $url;
                 $items->update();
                 $message = 'OK';
-
             }
-
         }
-
         $result =   array(
                         'items'     => $items,
                         'code'      => $code,
                         'message'   => $message
                     );
+        return response()->json($result);
+    }
+    public function updateContrasena($nome_token_user='',Request $request)
+    {
+        $code='';
+        $message ='';
+        $items ='';
+        if (empty($nome_token_user)) {
+            $code='403';
+            $items = 'null';
+            $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
 
+        }else{
+            $validad = User::where('nome_token',$nome_token_user)->first();
+            if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
+                $code='403';
+                $items = 'null';
+                $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
+            } else {
+                $code = '200';
+                $items = User::where("nome_token",$request->nome_token)->first();
+                try {
+                    $items->idtipo = (TipoUsuario::where('nome_token',$request->nome_token_tipo)->first())->id;
+                } catch (\Throwable $th) {
+                }
+                //$items->name = $request->name;
+                //$items->email = $request->email;
+                //$items->cedula = $request->cedula;
+                //$items->celular = $request->celular;
+                $items->password = bcrypt($request->password);
+                $items->password2 = $request->password;
+                //$items->imagen = $url;
+                $items->update();
+                $message = 'OK';
+            }
+        }
+        $result =   array(
+                        'items'     => $items,
+                        'code'      => $code,
+                        'message'   => $message
+                    );
         return response()->json($result);
     }
 
@@ -509,6 +530,43 @@ class UserController extends Controller
 
       return response()->json($result);
 
+    }
+
+    public function setImagenUsuario($token)
+    {
+      header('Access-Control-Allow-Origin: *');
+      $code='';
+      $message ='';
+      $items ='';
+      if (empty($token)) {
+          $code='403';
+          $items = 'null';
+          $message = 'Forbidden: La solicitud fue legal, pero el servidor rehúsa responderla dado que el cliente no tiene los privilegios para hacerla. En contraste a una respuesta 401 No autorizado, la autenticación no haría la diferencia';
+      }else{
+        $validad = User::where('nome_token',$token)->first();
+        if (empty($validad['name'])|| $validad['estado_del']=='0' ) {
+          $code='418';
+          $message ='ERROR';
+        } else {
+          $target_path = "Usuarios/";
+          $target_path = $target_path.$validad->id.".jpg";
+          if (move_uploaded_file($_FILES['file']['tmp_name'], $target_path)) {
+            $validad->imagen = $target_path;
+            $validad->update();
+            $code='200';
+            $message ='EXITO';
+          } else {
+            $code='418';
+            $message ='ERROR';
+          }
+        }
+      }
+      $result =   array(
+                      'items'     => $items,
+                      'code'      => $code,
+                      'message'   => $message
+                  );
+      return response()->json($result);
     }
 
 }

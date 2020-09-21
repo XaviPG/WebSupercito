@@ -26,8 +26,8 @@ class CreateOrdensTable extends Migration
             $table->string('latitud')->nullable();
             $table->string('longitud')->nullable();
             $table->timestamps();
-            
-            
+            $table->longtext('comprobante')->nullable();
+
             $table->foreign('idestado')->references('id')->on('estado_ventas');
             $table->foreign('idUsuario')->references('id')->on('users');
             $table->foreign('idcourier')->references('id')->on('users');

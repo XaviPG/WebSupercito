@@ -46,8 +46,9 @@ Route::get('/v0/tipo_usuarios_count','TipoUsuarioController@count')->name('api.v
 //Route::resource('/v0/usuarios','UserController');
 Route::post('/v0/usuarios_store/{nome_token_user?}/{data?}','UserController@store')->name('api.v0.usuarios.store');
 Route::get('/v0/usuarios_show/{nome_token_user?}/{data?}','UserController@show')->name('api.v0.usuarios.show');
-Route::post('/v0/usuarios_update/{nome_token_user?}/{data?}','UserController@update')->name('api.v0.usuarios.update');
-// Route::put('/v0/usuarios_update/{nome_token_user?}/{data?}','UserController@update')->name('api.v0.usuarios.update');
+//Route::post('/v0/usuarios_update/{nome_token_user?}/{data?}','UserController@update')->name('api.v0.usuarios.update');
+Route::put('/v0/usuarios_update/{nome_token_user?}/{data?}','UserController@update')->name('api.v0.usuarios.update');
+Route::put('/v0/contrasena_update/{nome_token_user?}/{data?}','UserController@updateContrasena')->name('api.v0.usuarios.updateContrasena');
 Route::delete('/v0/usuarios_delete/{nome_token_user?}/{data?}','UserController@destroy')->name('api.v0.usuarios.delete');
 Route::get('/v0/usuarios_filtro/{nome_token_user?}/{data?}','UserController@Filtro')->name('api.v0.usuarios.filtro');
 Route::get('/v0/todosUsuarios','UserController@todosUsuarios')->name('api.v0.usuarios.todosUsuarios');
@@ -154,7 +155,7 @@ Route::get('/v0/pdf', function () {
 //    return $pdf->download();
 });
 
-Route::post('/v0/guardarDocumentoTransaccion/{data?}','ComprobanteController@guardarDocumentoTransaccion');
+//Route::post('/v0/guardarDocumentoTransaccion/{data?}','ComprobanteController@guardarDocumentoTransaccion');
 
 Route::get('/v0/todasLasVentas/{data?}','OrdenController@todasLasVentas');
 
@@ -167,3 +168,6 @@ Route::post('/v0/ordenes_finalizar/{data?}','OrdenController@finalizarOrden');
 Route::get('/v0/contar_registros','RegistroPromocionesController@contarRegistros');
 
 Route::get('/v0/saber_si_hay_un_nuevo_pedido/{data?}','OrdenController@saber_si_hay_un_nuevo_pedido');
+
+Route::post('/v0/guardarDocumentoTransaccion/{token}/{idTipoPago}/{total}/{latitud}/{longitud}/{promociones}/{productos}','ComprobanteController@guardarDocumentoTransaccion');
+Route::post('/v0/guardarImagenUsuario/{token}','UserController@setImagenUsuario');

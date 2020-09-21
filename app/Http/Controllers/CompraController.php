@@ -128,8 +128,8 @@ class CompraController extends Controller
                   $items->finalizado = "0";
                   $items->latitud = $request->latitud;
                   $items->longitud = $request->longitud;
+                  $items->comprobante = null;
                   $items->save();
-
                   if (count(json_decode($request->idPromociones)) != 0) {
                     foreach(json_decode($request->idPromociones) as $dato){
                       $itemsCompra = new Compra();
@@ -178,7 +178,7 @@ class CompraController extends Controller
                 } catch (\Exception $e) {
                   $datoEliminar = Compra::where('idOrdenar',$items->id)->delete();
                   $code='418';
-                  $message ='ERROR';
+                  $message =$e;
                   $items ='';
                 }
             }
