@@ -373,7 +373,7 @@ class UserController extends Controller
                 //no existe ese usuarios o fue dado de baja.
             } else {
                 try {
-                    $tipo = TipoUsuario::where('cod','003')->first(); //Courier
+                    $tipo = TipoUsuario::where('cod','002')->first(); //Courier
 
                     $code = '200';
                     $items = User::with('tipo')->where([["estado_del","1"],["idtipo","$tipo->id"],["name","like","%$request->value%"]])->orderBy('name', 'desc')->get();

@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'idtipo'  =>  '3',
+            'idtipo'  =>  '2',
             'name' => 'courier',
             'email' => 'courier@courier.com',
             'cedula' => '0000000003',
@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'idtipo'  =>  '4',
+            'idtipo'  =>  '3',
             'name' => 'client',
             'email' => 'client@client.com',
             'cedula' => '0000000004',
