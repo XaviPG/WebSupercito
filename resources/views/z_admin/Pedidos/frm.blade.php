@@ -34,6 +34,7 @@
 		@include('z_admin.Pedidos.tabla')
 		@include('z_admin.Pedidos.z_modal')
 		@include('z_admin.Pedidos.zfk_modal_courier')
+		@include('z_admin.Pedidos.modal_comprobante')
 		{{-- @include('z_admin.Pedidos.zfk_tabla_courier') --}}
 	</div>
 	</div>

@@ -6,7 +6,7 @@ $( document ).ready(function() {
   
 });
 $("#cmbTipo_Promocion3").select2({
-  placeholder: "Seleccióne el tipo de promociónes",
+  placeholder: "Seleccione el tipo de promoción",
   allowClear: true,
   language: {
 
@@ -39,7 +39,7 @@ $("#cmbTipo_Promocion3").select2({
 });
 function comoboRegistro(idTipopromocion){
   $("#selectPromocion").select2({
-    placeholder: "Seleccióne el tipo de promociónes",
+    placeholder: "Seleccione la promoción",
     allowClear: true,
     language: {
   
@@ -73,7 +73,7 @@ function comoboRegistro(idTipopromocion){
   });
 }
 $("#cmbTipo_Producto").select2({
-  placeholder: "Seleccióne el tipo de promociónes",
+  placeholder: "Seleccione el producto",
   allowClear: true,
   language: {
 

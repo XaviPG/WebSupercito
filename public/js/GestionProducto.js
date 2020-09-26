@@ -99,7 +99,15 @@ function crear_tablaProductos_v2(data) {
           {
               title: 'Precio',
               width:ancho,
-              data: 'PRICE'
+               data: null,
+              render:function (data, type, row) {
+                // var html =  `${data.total}`;
+                var html =  Number(`${data.PRICE}`).toFixed(2);
+                // var html = Number((`${data.total}`).toFixed(2));
+                // parseFloat(Math.round(278.6 * 100) / 100).toFixed(2);
+
+                  return `$ ${html}`;
+              }
           },
           {
             title: 'Marca',
@@ -159,7 +167,7 @@ $('body').on('click','.abrirmodal',function(){
    $('#modaiddescuentoCantidad').modal('show');
    console.log(informacion)
    $('#id_Procu_DE').val(informacion[0]);
-   $('#IDcantidad').val(informacion[2]);
+   $('#IDcantidad').val(informacion[4]);
    $('#IDcantidad1').attr({"min":informacion[2]});
    idcan = informacion[4];
  });
@@ -652,7 +660,7 @@ function GP_preview_producto_img(id_foraneo) {
   var FrmData = {
     idProducto:id_foraneo
   }
-
+console.log('data',FrmData);
   $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -673,7 +681,7 @@ function GP_preview_producto_img(id_foraneo) {
         // $(`#file_producto_img_label`).val();
         $('#iframe_producto_img').attr('src',`/img/items/${data.items.file_name}.${data.items.file_extension}`);
       }
-      $('.shrinkToFit').prop('width','100 % !important');
+      $('.shrinkToFit').prop('width','10 % !important');
     },
     error: function () {
       $('#iframe_producto_img').attr('src',`/img/supercito.jpg`);
@@ -761,11 +769,12 @@ function GP_verModalProductos(id_busqueda) {
     success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
     {
       // debugger
+      var precio=Number(`${data.items.PRICE}`).toFixed(2);
       console.log("respuesta:",data);
       var fila = `
         <div class="col"><strong>Producto: </strong>${data.items.NAME}</div>         <br>
           <div class="w-100"></div>
-        <div class="col"><strong>Precio: </strong>${data.items.PRICE}</div>  <br>
+        <div class="col"><strong>Precio: </strong>$ ${precio}</div>  <br>
           <div class="w-100"></div>
         <div class="col"><strong>Marca: </strong>${data.items.MARCA}</div> <br>
           <div class="w-100"></div>

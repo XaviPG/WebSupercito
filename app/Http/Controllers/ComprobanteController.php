@@ -128,6 +128,10 @@ class ComprobanteController extends Controller
               $Orden->longitud = $longitud;
               $target_path = "uploads/";
               //$target_path = $target_path.basename( $_FILES['file']['name']);
+
+              //se agrega el id a nombre_img mas extension .jpg para acceder directamente a el
+              $Orden->nombre_img = $Orden->Orden.".jpg";
+              
               $target_path = $target_path.$Orden->Orden.".jpg";
               if (move_uploaded_file($_FILES['file']['tmp_name'], $target_path)) {
                 $code='200';

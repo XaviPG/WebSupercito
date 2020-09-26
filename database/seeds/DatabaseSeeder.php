@@ -108,11 +108,11 @@ class DatabaseSeeder extends Seeder
         // ]);
         DB::table('tipo_pagos')->insert([
             'identificador' => '1',
-            'descricion' => 'TRANSFERENCIA',
+            'descricion' => 'Transferencia',
         ]);
         DB::table('tipo_pagos')->insert([
             'identificador' => '2',
-            'descricion' => 'EFECTIVO',
+            'descricion' => 'En efectivo',
         ]);
      
         // DB::table('ordens')->insert([

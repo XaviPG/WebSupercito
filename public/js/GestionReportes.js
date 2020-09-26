@@ -2,6 +2,9 @@ $( document ).ready(function(e) {
   // $("#fechas").hide();
   $("#hasta").hide();
   $("#desde").hide();
+  $("#btn_consultarxfecha").hide();
+  
+  
   // console.log($('#cmb_tipo_reporte').val());
 });
 
@@ -77,10 +80,13 @@ $("#check_consultar").on("click",function () {
   if($("#check_consultar").prop('checked')==true){
     $("#hasta").show(); 
     $("#desde").show(); 
+    $("#btn_consultarxfecha").show();
   
-  }else {
+  }else if($("#check_consultar").prop('checked')==false){ 
     $("#hasta").hide();
     $("#desde").hide();
+    $("#btn_consultarxfecha").hide();
+    cargar_todas_ventas($("#filtroVentas").val());
   }
   // $("#fecha_hasta").attr("hide", false);
 });
@@ -104,41 +110,49 @@ $("#jqueryPrinf").on("click",function (e) {
   });
 });
 
+$('#btn_consultarxfecha').click(function (e) {
+  var fecha1=$('#fecha_desde').val();
+  var fecha2=$('#fecha_hasta').val();
+  var FrmData=
+  {
+    fecha_inicio:fecha1,
+    fecha_fin:fecha2
+    // todos:'1'
+    
+  }
+  //  debugger
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+  });
+
+  $.ajax({
+    url: '/api/v0/todasLasVentas/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+    method: "GET",             // Tipo de solicitud que se enviará, llamado como método
+    data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+    success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+    {
+        // crear_tablaVentas(data);
+        console.log("hola esto es una prueba:", data);
+         $('#cardReportes').show();
+         $('#contenido_ventas').show();
+         $('#tablaReporteVentas').show();
+        //  $("#hasta").show(); 
+        crear_reportes_tablaVentas(data);
+    },
+    error: function () {
+        mensaje = "OCURRIO UN ERROR: Archivo->GestionReportes.js , funcion->cargar_tablaVentas()";
+        swal(mensaje);
+    }
+  });
+
+});
 
 $('#cmbTipoReporte').change(function (e) {
 
   if ($('#cmbTipoReporte').val()=="ventas") {
-    var fecha1=$('#fecha_desde').val();
-    var fecha2=$('#fecha_hasta').val();
-    var FrmData=
-    {
-      fecha_inicio:fecha1,
-      fecha_fin:fecha2
-      // todos:'1'
-      
-    }
-    //  debugger
-    $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-    });
-  
-    $.ajax({
-      url: '/api/v0/todasLasVentas/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
-      method: "GET",             // Tipo de solicitud que se enviará, llamado como método
-      data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
-      success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
-      {
-          // crear_tablaVentas(data);
-          console.log("hola esto es una prueba:", data);
-          crear_reportes_tablaVentas(data);
-      },
-      error: function () {
-          mensaje = "OCURRIO UN ERROR: Archivo->GestionReportes.js , funcion->cargar_tablaVentas()";
-          swal(mensaje);
-      }
-    });
+    cargar_todas_ventas($("#filtroVentas").val());
   }
   // else if($('#cmbTipoReporte').val()=="usuarios") {
   //   var FrmData=
@@ -198,6 +212,42 @@ $('#cmbTipoReporte').change(function (e) {
 //     });
 //   }
 // });
+
+
+function cargar_todas_ventas(value='') {
+  //swal('cargar_tablaVentas');
+  var FrmData=
+  {
+    value: value,
+    value2: 'ventas',
+  }
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+  });
+
+  $.ajax({
+    url: '/api/v0/todasLasVentas',// Url que se envia para la solicitud esta en el web php es la ruta
+    method: "GET",             // Tipo de solicitud que se enviará, llamado como método
+    data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+    success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+    {
+
+        //  crear_tablaVentas(data);
+        // console.log(data);
+        crear_reportes_tablaVentas(data);
+        $('#cardReportes').show();
+         $('#contenido_ventas').show();
+         $('#tablaReporteVentas').show()
+    },
+    error: function () {
+        mensaje = "OCURRIO UN ERROR: Archivo->GestionVentas.js , funcion->cargar_tablaVentas()";
+        swal(mensaje);
+    }
+  });
+}
+
 function crear_reportes_tablaVentas(data) {
   $('#tablaVentas_reporte').html('');
 

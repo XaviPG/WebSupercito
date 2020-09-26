@@ -29,6 +29,7 @@ class CreateOrdensTable extends Migration
             $table->string('estado_del','1')->default('1');
             $table->timestamps();
             $table->longtext('comprobante')->nullable();
+            $table->string('nombre_img')->nullable();
 
             $table->foreign('idestado')->references('id')->on('estado_ventas');
             $table->foreign('idUsuario')->references('id')->on('users');

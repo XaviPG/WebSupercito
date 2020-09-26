@@ -37,6 +37,7 @@ function ocultar(argument) {
   $('#cardVentas').hide();
   $('#cardReportes').hide();
   $('#cardUbicacion').hide()
+  
 
 }
 // function contar(){
@@ -78,7 +79,7 @@ function mostrar(argument) {
   $('#cardProductos').show();
   $('#cardPedidos').show();
   $('#cardVentas').show();
-  $('#cardReportes').show();
+//   $('#cardReportes').show();
   $('#cardIngreso').show();
   $('#cardregistrokit').show();
 
@@ -190,6 +191,13 @@ $('#btnVerFrmReportes').click(function (e) {
   ocultar();
   $("#menuPanel").html("Panel de Control / Reportes");
   $('#cardReportes').show();
+  $('#contenido_ventas').hide();
+  $('#tablaReporteVentas').hide();
+  
+  
+
+//   $('#cardReportes').show();
+  
   $("#cmbTipoReporte").val("0");
  
 

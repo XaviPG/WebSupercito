@@ -221,8 +221,50 @@ class OrdenController extends Controller
         return response()->json($result);
     }
 
+    public function ImgComprobante(Request $request){
+    //return response()->json($request);
+        $code='500';
+        $message ='error';
+        $items =null;
+
+        try {
+            $estado=EstadoVenta::where("cod", "001")->first();
+            if(empty($request->fecha_inicio)||empty($request->fecha_fin)){
+            $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where("estado_del","1")
+                                                                                    ->where("id" ,$request->idorden)
+                                                                                    ->first();
+
+            }else{
+                $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where(
+                    "idestado",'<>' ,$estado->id)->whereDate("fechaOrden",">=",$request->fecha_inicio)
+                                                ->whereDate("fechaOrden","<=",$request->fecha_fin)
+                                                ->where("id" ,$request->idorden)
+                                                ->first();
+
+            }
+
+
+        $code='200';
+        $message = 'ok';
+        $result =   array(
+                          'items'     => $items,
+                          'code'      => $code,
+                          'message'   => $message
+                        );      
+        } catch (\Throwable $th) {
+            $items = $th->getMessage;
+            $result =   array(
+                'items'     => $items,
+                'code'      => $code,
+                'message'   => $message
+        );
+        }
+     
+    return response()->json($result);
+
+    }
     public function todasLasVentas(Request $request)
-    {
+    { //corrige ka sangria que no puedo
         ///return response()->json($request);
         $code='500';
         $message ='error';
@@ -230,8 +272,10 @@ class OrdenController extends Controller
 
         try {
             $estado=EstadoVenta::where("cod", "001")->first();
-            if(empty($request->fecha_inicio)||($request->fecha_fin)){
-             $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where("estado_del","1")->where("idestado",'<>' ,$estado->id)->get();
+            if(empty($request->fecha_inicio)||empty($request->fecha_fin)){
+             $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where("estado_del","1")
+                                                                                    ->where("idestado",'<>' ,$estado->id)
+                                                                                    ->get();
 
             }else{
                 $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where(
@@ -245,6 +289,12 @@ class OrdenController extends Controller
 
         } catch (\Throwable $th) {
             $items = $th->getMessage;
+           
+            // $items= Orden::with('Compras','TipoPago','Estado','Usuarios','Courier')->where("estado_del","1")
+            //                                                                         ->where("idestado",'<>' ,$estado->id)
+            //                                                                         ->where("id", $request->idorden)
+                                                                                    // ->get();
+
         }
 
 

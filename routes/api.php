@@ -159,6 +159,8 @@ Route::get('/v0/pdf', function () {
 
 Route::get('/v0/todasLasVentas/{data?}','OrdenController@todasLasVentas');
 
+Route::get('/v0/mostrar_comprobante/{data?}','OrdenController@ImgComprobante');
+
 Route::get('/v0/consultar_ubicacion_courier/{data?}','UserController@consultar_ubicacion_courier');
 
 //////////orden/////////////////////////
@@ -172,3 +174,4 @@ Route::delete('/v0/orden_delete/{nome_token_user?}/{data?}','OrdenController@des
 Route::get('/v0/notificaciones_ordenes/{data?}','NotificacionController@filtro');
 Route::post('/v0/guardarDocumentoTransaccion/{token}/{idTipoPago}/{total}/{latitud}/{longitud}/{promociones}/{productos}','ComprobanteController@guardarDocumentoTransaccion');
 Route::post('/v0/guardarImagenUsuario/{token}','UserController@setImagenUsuario');
+//donde esta el api de verComprobante?

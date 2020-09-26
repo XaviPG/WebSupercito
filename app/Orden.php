@@ -6,8 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Orden extends Model
 {
+
+    protected $fillable = [
+        'nombre',
+    ];
+
     public $timestamps=true;
     // protected $table = 'ordens';
+
 
     public function Compras(){
         return $this->hasMany('App\Compra','idOrdenar', 'id')->with('Promocion','Registro','Producto');

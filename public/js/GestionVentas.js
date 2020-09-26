@@ -66,7 +66,7 @@ function crear_tablaVentas(data) {
 
 
 	$.each(data.items, function(a, item) { // recorremos cada uno de los datos que retorna el objero json n valores
-
+    var total=Number(`${item.total}`).toFixed(2);
 	  var fila="";
 	  fila=`
 	    <tr class="fila_${item.nome_token}">
@@ -74,7 +74,7 @@ function crear_tablaVentas(data) {
 					<td><input type="hidden" value="${item.fecha}">${item.fecha}</td>
 	        // <td><input type="hidden" value="${item.usuario.name}">${item.usuario.name}</td>
 	        // <td><input type="hidden" value="${item.courier.name}">${item.courier.name}</td>
-	        // <td><input type="hidden" value="${item.total}">$ ${item.total}</td>
+	        // <td><input type="hidden" value="${item.total}">$ ${total}</td>
 	        // <td><input type="hidden" value="${item.estado.descripcion}">${item.estado.descripcion}</td>
 	        <td>
 	          <button type="button" class="btn btn-sm btn-outline-info" onclick="ventas_ver_modal('${item.nome_token}')" data-toggle="modal" >Modificar</button>
@@ -191,14 +191,7 @@ function crear_tablaVentas_v2(data) {
                   <th ><i style="color:red;" id="descrip" aria-hidden="true">Rechazada</i></th>
                   `;
                 }
-                // var html = `
-                //     <th ><i style="color:red;" id="descrip" aria-hidden="true">${descripcion}</i></th>
-                // `;
-                // $(`#popover_${data.nome_token}`).off('click');
-                // $(`#popover_${data.nome_token}`).on('click',function(e) {
-                //   $(`#popover_${data.nome_token}`).popover('show');
-                // });
-
+                
                 return `${html}`;
                 // return `<button>hola</button>`;
 
@@ -378,15 +371,15 @@ function crear_venta_modal(data) {
           ],
     /////////////////////////////////////////////////////////////////////////////////////
   });
-
+  var total=Number(`${data.total}`).toFixed(2);
   var fila = `
-      <div class="col bg-success"><strong>Fecha de venta:</strong></div>           <div class="col">${data.fechaOrden}</div>
-      <div class="col  bg-success"><strong>Total:</strong></div>           <div class="col">${data.total}</div>
+      <div class="col bg-warning"><strong>Fecha de venta:</strong></div>           <div class="col">${data.fechaOrden}</div>
+      <div class="col  bg-warning"><strong>Total:</strong></div>           <div class="col">$ ${total}</div>
         <div class="w-100"></div>
-      <div class="col bg-success"><strong>Nombre del cliente :</strong></div>           <div class="col">${data.cliente.name}</div>
-      <div class="col bg-success"><strong>Transportista :</strong></div>           <div class="col">${data.courier.name}</div>
+      <div class="col bg-warning"><strong>Nombre del cliente :</strong></div>           <div class="col">${data.cliente.name}</div>
+      <div class="col bg-warning"><strong>Transportista :</strong></div>           <div class="col">${data.courier.name}</div>
         
-      <div class="col bg-success"><strong>Listado de Productos vendidos :</strong></div>
+      <div class="col bg-warning"><strong>Listado de Productos vendidos :</strong></div>
         <div class="w-100"></div>
 <br>
     `;
