@@ -192,4 +192,5 @@ class CompraController extends Controller
         return response()->json($result);
     }
 
+
 }

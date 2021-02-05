@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use App\Compra;
 
 use App\Notificacion;
 
@@ -50,6 +51,62 @@ class OrdenController extends Controller
      * @param  \App\Orden  $orden
      * @return \Illuminate\Http\Response
      */
+
+    public function sacar_de_la_orden(Request $request)
+    {
+        $code ='500';
+        $items ='';
+        $message = 'Error';
+
+        $orden = Orden::with(['Detalle'])->where('id',$request->idorden)->first();
+        $compra = Compra::with('Producto')->where('idOrdenar',$request->idorden)->where('id',$request->idcompra)->first();
+
+        
+
+        //return response()->json( [$items,$compra] );
+
+        if ( sizeof($orden->detalle) == 1 ) {
+            // $compra->delete();
+            // $orden->delete();
+            // $code='200';
+            // $message='Listo';
+            // $items = 0;
+            try {
+                
+                $compra->delete();
+                $orden->delete();
+                $code='200';
+                $message='Listo';
+                
+            } catch (\Throwable $th) {
+                $message = $th->getMessage();
+            }
+        }
+        if ( sizeof($orden->detalle) > 1 ) {
+            $orden->total = ( floatval( $orden['total']) - floatval($compra['producto']['PRICE']));
+            try {
+                $orden->update();
+                $compra->delete();
+                $code='200';
+                $message='Listo';
+            } catch (\Throwable $th) {
+                $message = $th->getMessage();
+            }
+            
+        }
+
+        $items = Orden::with(['TipoPago','Courier','Cliente','Detalle','Estado'])->where('id',$request->idorden)->first();
+        if ($items == null) {
+            $items = 0;
+        }
+        $result =   array(
+            'items'     => $items,
+            'code'      => $code,
+            'message'   => $message
+        );
+        return response()->json($result);
+
+    }
 
 
     public function show(Request $request)
@@ -428,5 +485,6 @@ class OrdenController extends Controller
         return response()->json($result);
 
     }
+
 
 }

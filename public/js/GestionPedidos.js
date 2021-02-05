@@ -44,32 +44,6 @@ function cargar_tablaPedidos(value='') {
   
 }
 
-// function crear_tablaPedidos(data) {
-// 	//swal('hola');
-//   	$('#tablaPedidos').html('');
-
-//     //console.log(data);
-// 	$.each(data.items, function(a, item) { // recorremos cada uno de los datos que retorna el objero json n valores
-
-// 	  var fila="";
-// 	  fila=`
-// 	    <tr class="fila_${item.nome_token}">
-// 	        <th scope="row">${a+1}</th>
-//           <td><input type="hidden" value="${item.fecha}">${item.fecha}</td>
-// 	        <td><input type="hidden" value="${item.cliente.name}">${item.cliente.name}</td>
-// 	        <td><button type="button" class="btn btn-sm btn-outline-success" onclick="pedidos_verCouriers('${item.nome_token}')">Asignar </button></td>
-// 	        <td>
-// 	          <button type="button" class="btn btn-sm btn-outline-info" onclick="pedidos_ver('${item.nome_token}')" data-toggle="modal" >Ver</button>
-// 	          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="pedidos_eliminar('${item.nome_token}')">Eliminar</button>
-// 	        </td>
-// 	    </tr>
-// 	  `;
-// 	    //console.log(item);
-// 	    $('#tablaPedidos').append(fila);
-
-// 	});
-
-// }
 
 function pedidos_eliminar(nome_token) {
   var FrmData=
@@ -263,13 +237,14 @@ function crear_pedido_modal(data) {
           data: data.detalle,
           'createdRow': function (row, data, dataIndex) {
               // console.log(data);
+              $(row).attr('id','row'+data.id);
           },
           'columnDefs': [
               {
                  'targets': 3,
                  'data':'id',
                  'createdCell':  function (td, cellData, rowData, row, col) {
-                      // $(td).attr('id','nombreCurso'+row);
+                    //$(td).attr('id','filaPM'+row);
                       // $(td).html('');
                       // $(td).append('<label class="switch"><input type="checkbox"><span class="slider round"></span></label>');
                       // $(td).append(`<button type="button" class="btn btn-sm btn-outline-info">ver</button>`);
@@ -301,6 +276,15 @@ function crear_pedido_modal(data) {
                 render: function ( data, type, row ) {
                   return '';
                 }
+              },
+              {
+                title: 'ACCIONES',
+                data: null,
+                render: function ( data, type, row ) {
+                  var html = "";
+                  html = `<button type="button" class='btn btn-block' onclick="sacar_objeto_dela_orden(${data.id},${data.idOrdenar})">Quitar</button>`;
+                  return html;
+                }
               }
           ],
     /////////////////////////////////////////////////////////////////////////////////////
@@ -318,6 +302,81 @@ function crear_pedido_modal(data) {
     `;
     $('#tabla_infor_pedido').html(fila);
 }
+////////////////////sacar de la orden////////////////////////////////////////
+function sacar_objeto_dela_orden(idCompra,idOrdenar) {
+  // console.log(idCompra,idOrdenar);  
+  var FrmData=
+  {
+    idorden: idOrdenar,
+    idcompra: idCompra,
+  }
+  // console.log(idCompra);
+  // $(`#row${idCompra}`).hide();
+
+  swal({
+		title: "Estas seguro de esto?",
+		text: "Si aceptas, los datos seran removidos!",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	})
+	.then((willDelete) => {
+		if (willDelete) {
+
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      $.ajax({
+        url: servidor+'/api/v0/ordenes_sacar_de_la_orden',// Url que se envia para la solicitud esta en el web php es la ruta
+        method: "POST",             // Tipo de solicitud que se enviará, llamado como método
+        data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
+        success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
+        {
+          //console.log(data);
+            // crear_tablaCouriers(data);
+            console.log(data);
+            cargar_tablaPedidos('');
+            
+            if (data.items == 0) {
+              $(".frmPedidos_modal").modal('hide');
+            }else{
+              var total=Number(`${data.total}`).toFixed(2);
+              var fila = `
+                  <div class="col bg-warning"><strong>Fecha del pedido:</strong></div>           <div class="col">${data.fechaOrden}</div>
+                  <div class="col  bg-warning"><strong>Total a pagar:</strong></div>           <div class="col">$ ${total}</div>
+                    <div class="w-100"></div>
+                  <div class="col-3 bg-warning"><strong>Cliente solicitante :</strong></div>           <div class="col">${data.cliente.name}</div>
+                    <div class="w-100"></div>
+                    <div class="col-3 bg-warning"><strong>Listado de productos Solicitados:</strong></div>        <br>
+                    
+  
+                `;
+                $('#tabla_infor_pedido').html(fila);
+            }
+
+           
+            
+
+            $(`#row${idCompra}`).hide();
+        },
+        error: function (err) {
+            mensaje = err;
+            // mensaje = "OCURRIO UN ERROR: archivo->GestionPedidos.js , función->sacar_objeto_dela_orden()";
+            swal(mensaje);
+        }
+      });
+
+		} else {
+			swal("Cancelado!");
+		}
+	});
+
+  
+}
+///////////////////////////////////////////////////////////////
 
 //Cargar todos los Couriers
 //****************************************************************************************************************************************************************************
