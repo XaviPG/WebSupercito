@@ -1,5 +1,5 @@
 //var nome_token_user;
-var urlServidor="http://127.0.0.1:8000";
+var urlServidor="http://young-woodland-01238.herokuapp.com";
 $( document ).ready(function() {
 
   contar_Tipo();
