@@ -35,7 +35,7 @@
     <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <script type="text/javascript">
-      var servidor="http://127.0.0.1:8000";
+      var servidor="http://young-woodland-01238.herokuapp.com";
       function iniciarMap() {
         console.log('mapa');
         var coord = {lat: -0.8457982, lng:-80.163039};
@@ -98,7 +98,7 @@
           });
           lista = [];
           $.ajax({
-              url: servidor+'/api/v0/consultar_ubicacion_courier',// Url que se envia para la solicitud esta en el web php es la ruta
+              url: '/api/v0/consultar_ubicacion_courier',// Url que se envia para la solicitud esta en el web php es la ruta
               method: "GET",             // Tipo de solicitud que se enviará, llamado como método
               data: null,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
               success: function (data)   // Una función a ser llamada si la solicitud tiene éxito

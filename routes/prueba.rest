@@ -1,4 +1,4 @@
 
 
-get http://127.0.0.1:8000/api/v0/tipo_ConsultarTipoPromocionesPorRegistrosActivos
+get http://young-woodland-01238.herokuapp.com/api/v0/tipo_ConsultarTipoPromocionesPorRegistrosActivos
 Content-Type: application/json
