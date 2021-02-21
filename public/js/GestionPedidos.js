@@ -1,4 +1,4 @@
-var servidor="http://young-woodland-01238.herokuapp.com";
+var servidor="http://127.0.0.1:8000";
 //GestionPedidos.js
 $( document ).ready(function() {
 
@@ -44,13 +44,39 @@ function cargar_tablaPedidos(value='') {
   
 }
 
+// function crear_tablaPedidos(data) {
+// 	//swal('hola');
+//   	$('#tablaPedidos').html('');
+
+//     //console.log(data);
+// 	$.each(data.items, function(a, item) { // recorremos cada uno de los datos que retorna el objero json n valores
+
+// 	  var fila="";
+// 	  fila=`
+// 	    <tr class="fila_${item.nome_token}">
+// 	        <th scope="row">${a+1}</th>
+//           <td><input type="hidden" value="${item.fecha}">${item.fecha}</td>
+// 	        <td><input type="hidden" value="${item.cliente.name}">${item.cliente.name}</td>
+// 	        <td><button type="button" class="btn btn-sm btn-outline-success" onclick="pedidos_verCouriers('${item.nome_token}')">Asignar </button></td>
+// 	        <td>
+// 	          <button type="button" class="btn btn-sm btn-outline-info" onclick="pedidos_ver('${item.nome_token}')" data-toggle="modal" >Ver</button>
+// 	          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="pedidos_eliminar('${item.nome_token}')">Eliminar</button>
+// 	        </td>
+// 	    </tr>
+// 	  `;
+// 	    //console.log(item);
+// 	    $('#tablaPedidos').append(fila);
+
+// 	});
+
+// }
 
 function pedidos_eliminar(nome_token) {
   var FrmData=
   {
     nome_token:  nome_token,
   }
-  console.log(FrmData);
+
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -59,7 +85,7 @@ function pedidos_eliminar(nome_token) {
 
   swal({
     title: "Estas seguro de esto?",
-    text: "Si aceptas, la orden será rechazada!",
+    text: "Si aceptas, los datos seran eliminados!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
@@ -68,19 +94,18 @@ function pedidos_eliminar(nome_token) {
     if (willDelete) {
 
       $.ajax({
-        url: servidor+'/api/v0/ordenes_rechazar',// Url que se envia para la solicitud esta en el web php es la ruta
-        method: "POST",             // Tipo de solicitud que se enviará, llamado como método
+        url: servidor+'/api/v0/ventas_delete/'+$('#nome_token_user').val()+'/'+FrmData,// Url que se envia para la solicitud esta en el web php es la ruta
+        method: "DELETE",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
-          //  console.log(data);
-          swal("ACCION EXITOSA!", "Orden Rechazada", "success");
+          swal("ACCION EXITOSA!", "Datos Eliminados", "success");
           cargar_tablaPedidos('');
         },
         error: function () {
-            mensaje = "OCURRIO UN ERROR: Archivo->GestionPedidos.js , funcion->Orden_eliminar()";
+            mensaje = "OCURRIO UN ERROR: Archivo->GestionVentas.js , funcion->ventas_eliminar()";
             swal(mensaje);
-            // console.log(FrmData);
+
         }
       });
 
@@ -92,7 +117,7 @@ function pedidos_eliminar(nome_token) {
 
 function GP_crearTablaPedidos_2(data) {
   // debugger
-  var ancho ="16%";
+  var ancho ="25%";
   $('#tablaPedidos').html('');
   $('#tablaPedidos_padre').html('');
   //$.get(`${apiProductos}api/v0/itemsBodega`,function (data) {
@@ -102,7 +127,7 @@ function GP_crearTablaPedidos_2(data) {
       order: [],
       data: data,
       'createdRow': function (row, data, dataIndex) {
-           console.log(data);
+          // console.log(data);
       },
       'columnDefs': [
           {
@@ -131,33 +156,13 @@ function GP_crearTablaPedidos_2(data) {
               data: 'usuarios.name'
           },
           {
-            title: 'PAGO',
-            width:ancho,
-            data: null,
-            render: function (data, type, row) {
-            if (data.tipo_pago.identificador===1) {
-          
-              var html = `
-              <th ><i style="color:blue;" id="descrip" aria-hidden="true">Transfirió</i></th>
-              `;
-            }
-            if (data.tipo_pago.identificador===2) {
-          
-              var html = `
-              <th ><i style="color:green;" id="descrip" aria-hidden="true">Efectivo</i></th>
-              `;
-            }
-            return `${html}`;
-          } 
-        },
-          {
               title: 'TRANSPORTE',
               width:ancho,
               data: null,
               render: function ( data, type, row ) {
 
                 var html = `
-                  <button type="button" class="btn btn-sm btn-outline-success" onclick="pedidos_verCouriers('${data.id}')"><strong>ASIGNAR</strong></button>
+                  <button type="button" class="btn btn-sm btn-outline-success" onclick="pedidos_verCouriers('${data.id}')">Asignar </button>
                 `;
 
                 return `${html}`;
@@ -169,19 +174,11 @@ function GP_crearTablaPedidos_2(data) {
               width:ancho,
               data: null,
               render: function (data, type, row) {
-                var img_comprobante ='';
-                if (data.idTipoPago=='2') {
-                  img_comprobante = `<button disabled type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-picture-o" aria-hidden="true"></i></button>`;
-                 
-                }else if(data.idTipoPago=='1'){
-                  img_comprobante = `<button type="button" class="btn btn-sm btn-outline-secondary" onclick="GP_preview_comprobante_img(${data.id})"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
-                  `;
-                }
+
                 var html = `
                   <button type="button" class="btn btn-sm btn-outline-info" onclick="pedidos_ver('${data.id}')" data-toggle="modal" ><i class="fa fa-eye" aria-hidden="true"></i></button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="pedidos_eliminar('${data.id}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                  ${img_comprobante}
-                  `;
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="pedidos_eliminar('${data.nome_token}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                `;
 
                 return `${html}`;
                 // return `<button>hola</button>`;
@@ -237,14 +234,13 @@ function crear_pedido_modal(data) {
           data: data.detalle,
           'createdRow': function (row, data, dataIndex) {
               // console.log(data);
-              $(row).attr('id','row'+data.id);
           },
           'columnDefs': [
               {
                  'targets': 3,
                  'data':'id',
                  'createdCell':  function (td, cellData, rowData, row, col) {
-                    //$(td).attr('id','filaPM'+row);
+                      // $(td).attr('id','nombreCurso'+row);
                       // $(td).html('');
                       // $(td).append('<label class="switch"><input type="checkbox"><span class="slider round"></span></label>');
                       // $(td).append(`<button type="button" class="btn btn-sm btn-outline-info">ver</button>`);
@@ -289,19 +285,20 @@ function crear_pedido_modal(data) {
           ],
     /////////////////////////////////////////////////////////////////////////////////////
   });
-  var total=Number(`${data.total}`).toFixed(2);
+
   var fila = `
-      <div class="col bg-warning"><strong>Fecha del pedido:</strong></div>           <div class="col">${data.fechaOrden}</div>
-      <div class="col  bg-warning"><strong>Total a pagar:</strong></div>           <div class="col">$ ${total}</div>
+      <div class="col bg-success"><strong>Fecha del pedido:</strong></div>           <div class="col">${data.fechaOrden}</div>
+      <div class="col  bg-success"><strong>Total a pagar:</strong></div>           <div class="col">${data.total}</div>
         <div class="w-100"></div>
-      <div class="col-3 bg-warning"><strong>Cliente solicitante :</strong></div>           <div class="col">${data.cliente.name}</div>
+      <div class="col-3 bg-success"><strong>Cliente solicitante :</strong></div>           <div class="col">${data.cliente.name}</div>
         <div class="w-100"></div>
-        <div class="col-3 bg-warning"><strong>Listado de productos Solicitados:</strong></div>        <br>
+        <div class="col-3 bg-success"><strong>Listado de productos Solicitados:</strong></div>        <br>
         
 
     `;
     $('#tabla_infor_pedido').html(fila);
 }
+
 ////////////////////sacar de la orden////////////////////////////////////////
 function sacar_objeto_dela_orden(idCompra,idOrdenar) {
   // console.log(idCompra,idOrdenar);  
@@ -434,7 +431,7 @@ function crear_tablaCouriers(data) {
             <td><input type="hidden" value="${item.cedula}">${item.cedula}</td>
             <td><input type="hidden" value="${item.celular}">${item.celular}</td>
             <td>
-              <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" onclick="pedidos_asignarCourier('${item.id}')"><strong>ASIGNAR</strong></button>
+              <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" onclick="pedidos_asignarCourier('${item.id}')">Asignar</button>
             </td>
         </tr>
       `;
@@ -498,7 +495,7 @@ function crear_tablaCouriers_v2(data) {
                 render: function (data, type, row) {
 
                   var html = `
-                    <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" onclick="pedidos_asignarCourier('${data.id}')"><strong>ASIGNAR</strong></button>
+                    <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" onclick="pedidos_asignarCourier('${data.id}')">Asignar</button>
                   `;
 
                   return `${html}`;
@@ -638,44 +635,3 @@ function saber_si_hay_nuevas_ordenes() {
         }
       });
  }
- //
- function GP_preview_comprobante_img(id) {
-
-  var FrmData = {
-    idorden:id
-  }
-console.log('data:',FrmData);
-  $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-
-  $.ajax({
-    url: servidor+'/api/v0/mostrar_comprobante',// Url que se envia para la solicitud esta en el web php es la ruta
-    method: "GET",             // Tipo de solicitud que se enviará, llamado como método
-    data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
-    success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
-    {
-      console.log("result:-->",data);
-
-      if (data.items.comprobante == null) {
-        $('#iframe_comprobante_img').attr('src',`/img/supercito.jpg`);
-      }else{
-       
-        $('#iframe_comprobante_img').attr('src',`/uploads/`+data.items.nombre_img);
-      }
-      $('.shrinkToFit').prop('width','10 % !important');
-     // showmodal escribele  el codifo para  mistraral la moodal
-     $('.modal_combrobante').modal('show'); //breo que era asi
-    },
-    error: function () {
-      $('#iframe_comprobante_img').attr('src',`/img/supercito.jpg`);
-
-        // mensaje = "OCURRIO UN ERROR: Archivo->GestionProductosJSON.js , funcion->GP_preview_producto_img()";
-        // swal(mensaje);
-    }
-  });
-
-
-}

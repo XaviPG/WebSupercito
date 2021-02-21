@@ -95,6 +95,7 @@ class ComprobanteController extends Controller
     // public function guardarDocumentoTransaccion($token,$idTipoPago){
     public function guardarDocumentoTransaccion($token,$idTipoPago,$total,$latitud,$longitud,$promociones,$productos){
       header('Access-Control-Allow-Origin: *');
+      return response()->json($result);
       $code='';
       $message ='';
       $items ='';

@@ -46,9 +46,7 @@ Route::get('/v0/tipo_usuarios_count','TipoUsuarioController@count')->name('api.v
 //Route::resource('/v0/usuarios','UserController');
 Route::post('/v0/usuarios_store/{nome_token_user?}/{data?}','UserController@store')->name('api.v0.usuarios.store');
 Route::get('/v0/usuarios_show/{nome_token_user?}/{data?}','UserController@show')->name('api.v0.usuarios.show');
-//Route::post('/v0/usuarios_update/{nome_token_user?}/{data?}','UserController@update')->name('api.v0.usuarios.update');
 Route::put('/v0/usuarios_update/{nome_token_user?}/{data?}','UserController@update')->name('api.v0.usuarios.update');
-Route::put('/v0/contrasena_update/{nome_token_user?}/{data?}','UserController@updateContrasena')->name('api.v0.usuarios.updateContrasena');
 Route::delete('/v0/usuarios_delete/{nome_token_user?}/{data?}','UserController@destroy')->name('api.v0.usuarios.delete');
 Route::get('/v0/usuarios_filtro/{nome_token_user?}/{data?}','UserController@Filtro')->name('api.v0.usuarios.filtro');
 Route::get('/v0/todosUsuarios','UserController@todosUsuarios')->name('api.v0.usuarios.todosUsuarios');
@@ -135,7 +133,7 @@ Route::get('/v0/ProductosPorid/{data?}','PromocionDelProductoController@Producto
 
 //compra
 Route::post('/v0/ComprarProducto/{data?}','CompraController@ComprarProducto')->name('api.v0.compras.ComprarProducto');
-Route::post('/v0/OrdenesCompradas/{data?}','OrdenController@ConsultarComprasHechas')->name('api.v0.compras.OrdenesPorUsuario');
+Route::post('/v0/OrdenesCompradas/{data?}','OrdenController@ConsultarComprasHechas')->name('api.v0.compras.OrdenesPorUsuario'); 
 Route::get('/v0/SoloPedidos/{data?}','OrdenController@SoloPedidos');
 Route::put('/v0/AsignarCourier/{data?}','OrdenController@AsignarCourier');
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,25 +153,18 @@ Route::get('/v0/pdf', function () {
 //    return $pdf->download();
 });
 
-//Route::post('/v0/guardarDocumentoTransaccion/{data?}','ComprobanteController@guardarDocumentoTransaccion');
+Route::post('/v0/guardarDocumentoTransaccion/{data?}','ComprobanteController@guardarDocumentoTransaccion');
 
 Route::get('/v0/todasLasVentas/{data?}','OrdenController@todasLasVentas');
-
-Route::get('/v0/mostrar_comprobante/{data?}','OrdenController@ImgComprobante');
 
 Route::get('/v0/consultar_ubicacion_courier/{data?}','UserController@consultar_ubicacion_courier');
 
 //////////orden/////////////////////////
 Route::get('/v0/ordenes_show/{data?}','OrdenController@show');
-Route::post('/v0/ordenes_sacar_de_la_orden/{data?}','OrdenController@sacar_de_la_orden');
-
 Route::post('/v0/ordenes_finalizar/{data?}','OrdenController@finalizarOrden');
-Route::post('/v0/ordenes_rechazar/{data?}','OrdenController@RechazarOrden');
+
 Route::get('/v0/contar_registros','KitController@contar');
 
 Route::get('/v0/saber_si_hay_un_nuevo_pedido/{data?}','OrdenController@saber_si_hay_un_nuevo_pedido');
-Route::delete('/v0/orden_delete/{nome_token_user?}/{data?}','OrdenController@destroy');
-Route::get('/v0/notificaciones_ordenes/{data?}','NotificacionController@filtro');
-Route::post('/v0/guardarDocumentoTransaccion/{token}/{idTipoPago}/{total}/{latitud}/{longitud}/{promociones}/{productos}','ComprobanteController@guardarDocumentoTransaccion');
-Route::post('/v0/guardarImagenUsuario/{token}','UserController@setImagenUsuario');
-//donde esta el api de verComprobante?
+
+Route::post('/v0/ordenes_sacar_de_la_orden/{data?}','OrdenController@sacar_de_la_orden');

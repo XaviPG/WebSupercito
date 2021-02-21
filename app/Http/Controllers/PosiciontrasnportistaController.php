@@ -10,7 +10,7 @@ class PosiciontrasnportistaController extends Controller
 {
   public function PosicionTrasnportista(Request $request)
   {
-    $posicionTransportista = posiciontrasnportista::where('idUsuario',$request->idUsuario)->get()->first();
+    $posicionTransportista = posiciontrasnportista::with('Usuariotransportista')->where('idUsuario',$request->idUsuario)->get()->first();
     return response($posicionTransportista,200);
   }
     /**

@@ -483,7 +483,7 @@ class UserController extends Controller
                 $message = 'Ya existe un usuario con la misma nombre';
             }else{
                 $items = new User();
-                $items->idtipo = (TipoUsuario::where('cod','004')->first())->id;
+                $items->idtipo = (TipoUsuario::where('cod','003')->first())->id;
                 $items->name = $request->name;
                 $items->email = $request->email;
                 $items->cedula = $request->cedula;

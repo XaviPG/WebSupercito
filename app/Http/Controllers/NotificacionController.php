@@ -85,8 +85,32 @@ class NotificacionController extends Controller
     {
         //
     }
+    public function desactivarNotificacion(Request $request){
+        $code='500';
+        $message ='error';
+        $items ='';
+        try {            
+            $message = 'ok';
+            $code="200";
+            foreach(json_decode($request->notificaciones) as $item){
+              $dato = Notificacion::where([['id',$item->id]])->get()->first();
+              if(!empty($dato['id'])){
+                $dato->estado_del ='0';
+                $dato->update();
+              }
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
-    public function filtro(Request $request)
+        $result =   array(
+            'items'     => json_decode($request->notificaciones),
+            'code'      => $code,
+            'message'   => $message
+        );
+        return response()->json($result);
+    }
+    public function filtro($idUsuario)
     {
         $code='500';
         $message ='error';
@@ -94,7 +118,12 @@ class NotificacionController extends Controller
 
         try {
             //code...
-            $items = Notificacion::where([['idusuario',$request->idusuario],['estado_del','1']])->get();
+            $items = Notificacion::where([['idusuario',$idUsuario],['estado_del','1']])->get();
+        //    foreach($items as $item){
+        //         $item->estado_del ='0';
+        //         $item->update();
+        //    }
+         
             $message = 'ok';
             $code="200";
 
