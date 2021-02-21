@@ -1,6 +1,6 @@
 
 /storage/*.key
-.env
+
 .env.backup
 .phpunit.result.cache
 Homestead.json
