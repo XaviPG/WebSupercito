@@ -26,6 +26,7 @@ return array(
     'App\\Http\\Controllers\\EstadoVentaController' => $baseDir . '/app/Http/Controllers/EstadoVentaController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\KitController' => $baseDir . '/app/Http/Controllers/KitController.php',
+    'App\\Http\\Controllers\\NotificacionController' => $baseDir . '/app/Http/Controllers/NotificacionController.php',
     'App\\Http\\Controllers\\OrdenController' => $baseDir . '/app/Http/Controllers/OrdenController.php',
     'App\\Http\\Controllers\\PosiciontrasnportistaController' => $baseDir . '/app/Http/Controllers/PosiciontrasnportistaController.php',
     'App\\Http\\Controllers\\ProductoController' => $baseDir . '/app/Http/Controllers/ProductoController.php',
