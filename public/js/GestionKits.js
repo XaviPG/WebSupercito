@@ -125,13 +125,13 @@ function ingresarKit(){
      });
     
     $.ajax({
-        url: servidor+'/api/v0/kit_store/'+FrmData, // Url que se envia para la solicitud esta en el web php es la ruta
+        url: servidor+'/api/v0/kit_store', // Url que se envia para la solicitud esta en el web php es la ruta
         method: "POST",             // Tipo de solicitud que se enviará, llamado como método
         data: FrmData,               // Datos enviados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
           if(data['code'] == "200"){
-            cargar_tablakit(data.items);
+            cargar_tablakit(data);
             limpiar() ;
             swal("ACCION EXITOSA!", "Datos Guardados", "success");  
           }else{
