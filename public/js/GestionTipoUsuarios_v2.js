@@ -1,5 +1,6 @@
 //var nome_token_user;
 var urlServidor="http://young-woodland-01238.herokuapp.com";
+// var servidor="http://127.0.0.1:8000";
 $( document ).ready(function() {
 	//nome_token_user = $('#nome_token_user').val();
 	//cargar_tablaTipoUsuarios('');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Orden;
+use App\Compra;
 use App\EstadoVenta;
 use App\User;
 use Illuminate\Http\Request;
