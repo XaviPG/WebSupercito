@@ -1,4 +1,4 @@
-var servidor="http://young-woodland-01238.herokuapp.com";
+var servidor="";
 // var servidor="http://127.0.0.1:8000";
 
 $( document ).ready(function() {
