@@ -168,6 +168,7 @@ function cargar_tablakit(id) {
       data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
       success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
       {
+    console.log(data);
         llenar_tabla_kit(data);
       },
       error: function () {
