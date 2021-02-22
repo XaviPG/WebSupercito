@@ -131,7 +131,8 @@ function ingresarKit(){
         success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
         {
           if(data['code'] == "200"){
-            cargar_tablakit(data);
+            console.log(data.items);
+            cargar_tablakit(data.items);
             limpiar() ;
             swal("ACCION EXITOSA!", "Datos Guardados", "success");  
           }else{
