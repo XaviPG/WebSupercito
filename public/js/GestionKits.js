@@ -173,8 +173,8 @@ function cargar_tablakit(id) {
       },
       error: function () {
           mensaje = "ACEPTAR ";
-          llenar_tabla_kit(data);
-             swal(mensaje);
+          // llenar_tabla_kit(data);
+            //  swal(mensaje);
              
       }
   });
