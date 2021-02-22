@@ -1,4 +1,5 @@
 var servidor="";
+var servidor="http://young-woodland-01238.herokuapp.com";
 // var servidor="http://127.0.0.1:8000";
 
 $( document ).ready(function() {
@@ -162,7 +163,7 @@ function cargar_tablakit(id) {
   });
 
   $.ajax({
-      url: '/api/v0/kit_filtro/',// Url que se envia para la solicitud esta en el web php es la ruta
+      url: '/api/v0/kit_filtro',// Url que se envia para la solicitud esta en el web php es la ruta
       method: "GET",             // Tipo de solicitud que se enviará, llamado como método
       data: FrmData,               // Datos enviaráados al servidor, un conjunto de pares clave / valor (es decir, campos de formulario y valores)
       success: function (data)   // Una función a ser llamada si la solicitud tiene éxito
