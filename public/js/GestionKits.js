@@ -173,8 +173,9 @@ function cargar_tablakit(id) {
       },
       error: function () {
           mensaje = "ACEPTAR ";
+          llenar_tabla_kit(data);
              swal(mensaje);
-             llenar_tabla_kit(data);
+             
       }
   });
 }
@@ -194,7 +195,7 @@ $('#tablakit').DataTable({
     },
     'columnDefs': [
         {
-           'targets':3,
+           'targets':2,
            'data':'item.id_item',
            'createdCell':  function (td, cellData, rowData, row, col) {
 
