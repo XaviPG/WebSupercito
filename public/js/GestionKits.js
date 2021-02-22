@@ -1,5 +1,5 @@
 var servidor="";
-var servidor="http://young-woodland-01238.herokuapp.com";
+
 // var servidor="http://127.0.0.1:8000";
 
 $( document ).ready(function() {
@@ -172,8 +172,9 @@ function cargar_tablakit(id) {
         llenar_tabla_kit(data);
       },
       error: function () {
-          mensaje = "OCURRIO UN ERROR en la función cargar_tablaProductoPromo1() ";
+          mensaje = "ACEPTAR ";
              swal(mensaje);
+             llenar_tabla_kit(data);
       }
   });
 }
@@ -193,7 +194,7 @@ $('#tablakit').DataTable({
     },
     'columnDefs': [
         {
-           'targets':2,
+           'targets':3,
            'data':'item.id_item',
            'createdCell':  function (td, cellData, rowData, row, col) {
 
