@@ -176,6 +176,5 @@ Route::delete('/v0/orden_delete/{nome_token_user?}/{data?}','OrdenController@des
 Route::get('/v0/notificaciones_ordenes/{data?}','NotificacionController@filtro');
 Route::post('/v0/guardarDocumentoTransaccion/{token}/{idTipoPago}/{total}/{latitud}/{longitud}/{promociones}/{productos}','ComprobanteController@guardarDocumentoTransaccion');
 Route::post('/v0/guardarImagenUsuario/{token}','UserController@setImagenUsuario');
-
-
 Route::post('/v0/ordenes_sacar_de_la_orden/{data?}','OrdenController@sacar_de_la_orden');
+//donde esta el api de verComprobante?

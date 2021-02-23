@@ -112,6 +112,8 @@ class NotificacionController extends Controller
         );
         return response()->json($result);
     }
+
+    
     public function filtro($idUsuario)
     {
         $code='500';
