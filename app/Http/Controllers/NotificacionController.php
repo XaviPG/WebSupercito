@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Notificacion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+namespace App\Http\Controllers;
+
 
 class NotificacionController extends Controller
 {

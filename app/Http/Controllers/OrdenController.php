@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use App\Notificacion;
 class OrdenController extends Controller
 {
     /**
@@ -356,7 +357,7 @@ class OrdenController extends Controller
        return response()->json($result);
    }
    public function finalizarOrden(Request $request)
-    {
+   {
         $code='500';
         $message ='error';
         $items =null;
@@ -382,7 +383,6 @@ class OrdenController extends Controller
             'message'   => $message
         );
         return response()->json($result);
-
     }
 
     public function RechazarOrden(Request $request)
