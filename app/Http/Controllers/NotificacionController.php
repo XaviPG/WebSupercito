@@ -119,10 +119,9 @@ class NotificacionController extends Controller
         $code='500';
         $message ='error';
         $items ='';
-
         try {
             //code...
-            $items = Notificacion::where([['idusuario',$idUsuario],['estado_del','1']])->get();
+            $items =Notificacion::where([['idusuario',$idUsuario],['estado_del','1']])->get();
         //    foreach($items as $item){
         //         $item->estado_del ='0';
         //         $item->update();
@@ -131,8 +130,8 @@ class NotificacionController extends Controller
             $message = 'ok';
             $code="200";
 
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (Exception $e) {
+            $message = $e->getMessage();
         }
 
         $result =   array(
