@@ -131,7 +131,7 @@ class NotificacionController extends Controller
             $code="200";
 
         } catch (Exception $e) {
-            $message = $e->getMessage();
+            // $message = $e->getMessage();
         }
 
         $result =   array(
