@@ -116,7 +116,7 @@ class NotificacionController extends Controller
     
     public function filtro($idUsuario)
     {
-        return $idUsuario;
+        //return $idUsuario;
         $code='500';
         $message ='error';
         $items ='';
