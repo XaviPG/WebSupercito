@@ -116,16 +116,17 @@ class NotificacionController extends Controller
     
     public function filtro($idUsuario)
     {
+        return $idUsuario;
         $code='500';
         $message ='error';
         $items ='';
         try {
             //code...
             $items=Notificacion::where([['idusuario',$idUsuario],['estado_del','1']])->get();
-        //    foreach($items as $item){
-        //         $item->estado_del ='0';
-        //         $item->update();
-        //    }
+            //    foreach($items as $item){
+            //         $item->estado_del ='0';
+            //         $item->update();
+            //    }
          
             $message = 'ok';
             $code="200";
