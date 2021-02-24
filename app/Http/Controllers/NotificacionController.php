@@ -121,7 +121,7 @@ class NotificacionController extends Controller
         $items ='';
         try {
             //code...
-            $items =Notificacion::where([['idusuario',$idUsuario],['estado_del','1']])->get();
+            $items=Notificacion::where([['idusuario',$idUsuario],['estado_del','1']])->get();
         //    foreach($items as $item){
         //         $item->estado_del ='0';
         //         $item->update();
@@ -131,7 +131,7 @@ class NotificacionController extends Controller
             $code="200";
 
         } catch (Exception $e) {
-            // $message = $e->getMessage();
+            $message = $e->getMessage();
         }
 
         $result =   array(
