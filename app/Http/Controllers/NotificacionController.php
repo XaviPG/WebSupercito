@@ -120,7 +120,6 @@ class NotificacionController extends Controller
         $items ='';
         try {
             //code...
-            return Notificacion::all();
             $items=Notificacion::where([['idusuario',$idUsuario],['estado_del','1']])->get();
             //    foreach($items as $item){
             //         $item->estado_del ='0';
